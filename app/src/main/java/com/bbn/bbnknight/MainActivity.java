@@ -7,8 +7,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.android.material.navigation.NavigationView;
+
+public class MainActivity extends AppCompatActivity
+    implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -26,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        NavigationView navigationView=findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -34,5 +40,21 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        int id = menuItem.getItemId();
+
+        if(id == R.id.Today) {
+            Toast.makeText(this, "Today is selected", Toast.LENGTH_LONG).show();
+        } else if (id == R.id.Upcoming) {
+            Toast.makeText(this, "Upcoming is selected", Toast.LENGTH_LONG).show();
+        } else if (id == R.id.log) {
+            Toast.makeText(this, "logout is selected", Toast.LENGTH_LONG).show();
+        }
+
+        return false;
     }
 }
