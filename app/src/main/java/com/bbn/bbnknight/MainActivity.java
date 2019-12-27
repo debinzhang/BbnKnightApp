@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -39,9 +41,31 @@ public class MainActivity extends AppCompatActivity
         if (mToggle.onOptionsItemSelected(item)) {
             return true;
         }
+
+        //The following is to handle setting menu
+        //Switch(item.getItemId()) {
+        switch(item.getItemId()) {
+            case R.id.setBlock:
+                Toast.makeText(getApplicationContext(), "block setting selected", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.setClass:
+                Toast.makeText(getApplicationContext(), "class setting selected", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.setLunch:
+                Toast.makeText(getApplicationContext(), "lunch setting selected", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.profile:
+                Toast.makeText(getApplicationContext(), "profile selected", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.credit:
+                Toast.makeText(getApplicationContext(), "credit setting selected", Toast.LENGTH_LONG).show();
+                break;
+            default:
+                Toast.makeText(getApplicationContext(), "unknown item selected", Toast.LENGTH_LONG).show();
+        }
+
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -56,5 +80,17 @@ public class MainActivity extends AppCompatActivity
         }
 
         return false;
+    }
+
+
+    // add setting menu
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.setting_menu, menu);
+
+
+        return super.onCreateOptionsMenu(menu);
     }
 }
