@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,7 +15,7 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity
-    implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        NavigationView navigationView=findViewById(R.id.navigation_view);
+        NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -44,12 +45,16 @@ public class MainActivity extends AppCompatActivity
 
         //The following is to handle setting menu
         //Switch(item.getItemId()) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.setBlock:
                 Toast.makeText(getApplicationContext(), "block setting selected", Toast.LENGTH_LONG).show();
                 break;
             case R.id.setClass:
                 Toast.makeText(getApplicationContext(), "class setting selected", Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(getApplicationContext(), SetClassActivity.class);
+                startActivity(intent);
+
                 break;
             case R.id.setLunch:
                 Toast.makeText(getApplicationContext(), "lunch setting selected", Toast.LENGTH_LONG).show();
@@ -71,7 +76,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
 
-        if(id == R.id.Today) {
+        if (id == R.id.Today) {
             Toast.makeText(this, "Today is selected", Toast.LENGTH_LONG).show();
         } else if (id == R.id.Upcoming) {
             Toast.makeText(this, "Upcoming is selected", Toast.LENGTH_LONG).show();
