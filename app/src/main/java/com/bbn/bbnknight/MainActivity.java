@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.style.UpdateAppearance;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -80,6 +81,9 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "Today is selected", Toast.LENGTH_LONG).show();
         } else if (id == R.id.Upcoming) {
             Toast.makeText(this, "Upcoming is selected", Toast.LENGTH_LONG).show();
+
+            Intent intent = new Intent(getApplicationContext(), upcomingActivity.class);
+            startActivity(intent);
         } else if (id == R.id.log) {
             Toast.makeText(this, "logout is selected", Toast.LENGTH_LONG).show();
         }
