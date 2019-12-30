@@ -5,7 +5,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.style.UpdateAppearance;
 import android.view.Menu;
@@ -14,6 +16,12 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,6 +44,17 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // retrieve class information
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(
+                "com.bbn.bbnknight", Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("classes", "");
+
+        if (!json.isEmpty()) {
+            Type type = new TypeToken<ArrayList<SetClassActivity.ClassItem>>(){}.getType();
+            SetClassActivity.mClasses = gson.fromJson(json, type);
+        }
     }
 
     @Override

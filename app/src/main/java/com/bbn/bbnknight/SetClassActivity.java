@@ -20,13 +20,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SetClassActivity extends AppCompatActivity {
-    public class ClassItem {
+    public static class ClassItem {
         String name;
         String block;
         String location;
         String days;
         int color;
     };
+
+    ListView mListView;
+    static public ArrayList<ClassItem> mClasses = new ArrayList<>();
+    static ClassListAdaptor mClassListAdaptor;
 
     // on click Add Class button
     public void addClassButtonClicked(View view) {
@@ -36,44 +40,10 @@ public class SetClassActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    ListView mListView;
-    public ArrayList<ClassItem> mClasses = new ArrayList<>();
-    ClassListAdaptor mClassListAdaptor;
-
-    public void initClassBlocks() {
-        ClassItem classItem;
-        classItem = new ClassItem();
-        classItem.name = "Math";
-        classItem.block = "A Block";
-        mClasses.add(classItem);
-
-        classItem = new ClassItem();
-        classItem.name = "English";
-        classItem.block = "C Block";
-        mClasses.add(classItem);
-
-        classItem = new ClassItem();
-        classItem.name = "Chemistry";
-        classItem.block = "D Block";
-        mClasses.add(classItem);
-
-        classItem = new ClassItem();
-        classItem.name = "Computer Science";
-        classItem.block = "G Block";
-        mClasses.add(classItem);
-
-        classItem = new ClassItem();
-        classItem.name = "Physics";
-        classItem.block = "H Block";
-        mClasses.add(classItem);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_class);
-
-        initClassBlocks();
 
         mListView = findViewById(R.id.classListView);
         mClassListAdaptor = new ClassListAdaptor(this, android.R.layout.simple_list_item_1,
@@ -100,6 +70,7 @@ public class SetClassActivity extends AppCompatActivity {
             TextView classBlockTextView = view.findViewById(R.id.classBlockTextView);
 
             classNameTextView.setText(mClasses.get(position).name);
+            classNameTextView.setTextColor(mClasses.get(position).color);
             classBlockTextView.setText(mClasses.get(position).block);
 
             return view;
