@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,14 @@ public class SetClassActivity extends AppCompatActivity {
         public String name;
         public String block;
     };
+
+    // on click Add Class button
+    public void addClassButtonClicked(View view) {
+        Log.i("Debin", "addClassButtonClicked");
+        Toast.makeText(this, "addClassButtonClicked!", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, addNewClassActivity.class);
+        startActivity(intent);
+    }
 
     ListView mListView;
     public ArrayList<ClassItem> mClasses = new ArrayList<>();
@@ -92,4 +102,5 @@ public class SetClassActivity extends AppCompatActivity {
             return view;
         }
     }
+
 }
