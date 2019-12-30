@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
@@ -30,6 +31,16 @@ public class addNewClassActivity extends AppCompatActivity {
             }
         });
         colorPicker.show();
+    }
+
+    // Save button clicked
+    public void saveButtonClicked(View view) {
+        Toast.makeText(this, "save new class", Toast.LENGTH_SHORT).show();
+    }
+
+    // Cancle button clicked
+    public void cancelButtonClicked(View view) {
+        Toast.makeText(this, "Cancleclass", Toast.LENGTH_SHORT).show();
     }
 
     @Override

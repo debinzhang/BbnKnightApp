@@ -21,8 +21,11 @@ import java.util.List;
 
 public class SetClassActivity extends AppCompatActivity {
     public class ClassItem {
-        public String name;
-        public String block;
+        String name;
+        String block;
+        String location;
+        String days;
+        int color;
     };
 
     // on click Add Class button
