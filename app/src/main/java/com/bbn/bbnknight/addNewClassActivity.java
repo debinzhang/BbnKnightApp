@@ -81,6 +81,7 @@ public class addNewClassActivity extends AppCompatActivity {
     // Cancle button clicked
     public void cancelButtonClicked(View view) {
         Toast.makeText(this, "Cancleclass", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override
