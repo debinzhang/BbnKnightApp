@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.style.UpdateAppearance;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -55,6 +56,16 @@ public class MainActivity extends AppCompatActivity
             Type type = new TypeToken<ArrayList<SetClassActivity.ClassItem>>(){}.getType();
             SetClassActivity.mClasses = gson.fromJson(json, type);
         }
+
+        //test code
+        BlocksInWeek.initBlocks();
+        String str = BlocksInWeek.weekBlock.get(0).getBlock(0).name;
+        Log.i("Debin-1", "weekblock: " + str);
+        str = BlocksInWeek.weekBlock.get(1).getBlock(1).name;
+        Log.i("Debin-2", "weekblock: " + str);
+
+
+
     }
 
     @Override
