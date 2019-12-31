@@ -134,19 +134,18 @@
             android:layout_marginBottom="10dp"
             android:gravity="fill"
             android:text="Block"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/blockEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+        <Spinner
+            android:id="@+id/blockspinner"
+            android:layout_width="204dp"
+            android:layout_height="30dp"
+            android:gravity="right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -190,7 +189,7 @@
         android:layout_marginTop="225dp"
         android:layout_marginEnd="65dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="300dp"
+        android:layout_marginBottom="250dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -202,6 +201,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="40dp"
             android:onClick="cancelButtonClicked"
             android:text="@android:string/cancel"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -215,6 +215,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="75dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginTop="40dp"
             android:onClick="saveButtonClicked"
             android:text="Save"
             app:layout_constraintBottom_toBottomOf="parent"

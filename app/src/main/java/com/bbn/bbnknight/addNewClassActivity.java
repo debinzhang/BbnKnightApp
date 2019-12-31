@@ -5,22 +5,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
-public class addNewClassActivity extends AppCompatActivity {
+public class addNewClassActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     int mColor;
     EditText mClassNameEditText;
     EditText mLocationEditText;
-    EditText mBlockEditText;
+    Spinner mBlockspinner;
     EditText mDaysEditText;
     Button mPickColorButton;
+    String selectedBlock;
 
     // pick color button clicked
     public void openColorPicker(View view) {
@@ -51,7 +56,7 @@ public class addNewClassActivity extends AppCompatActivity {
             Toast.makeText(this, "Location CANNOT be empty", Toast.LENGTH_LONG).show();
             return;
         }
-        String block = mBlockEditText.getText().toString();
+        String block = selectedBlock;
         if (block.isEmpty()) {
             Toast.makeText(this, "Block CANNOT be empty", Toast.LENGTH_LONG).show();
             return;
@@ -87,14 +92,32 @@ public class addNewClassActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i("Evan", "onCreate 1");
         setContentView(R.layout.activity_add_new_class);
+        Log.i("Evan", "onCreate 2");
 
         //mColor  = ContextCompat.getColor(this, R.color.colorPrimary);
         mColor = 0xAAAAAA; // default color, defined in xml
         mClassNameEditText = findViewById(R.id.classNameEditText);
-        mBlockEditText = findViewById(R.id.blockEditText);
+        mBlockspinner = findViewById(R.id.blockspinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.classBlocks, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mBlockspinner.setAdapter(adapter);
+        mBlockspinner.setOnItemSelectedListener(this);
         mLocationEditText = findViewById(R.id.locationEditText);
         mDaysEditText = findViewById(R.id.daysEditText);
         mPickColorButton = findViewById(R.id.pickColorButton);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        selectedBlock = adapterView.getItemAtPosition(i).toString();
+        Toast.makeText(adapterView.getContext(),selectedBlock,Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }
