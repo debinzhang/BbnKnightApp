@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.Upcoming) {
             Toast.makeText(this, "Upcoming is selected", Toast.LENGTH_LONG).show();
 
-            Intent intent = new Intent(getApplicationContext(), upcomingActivity.class);
+            Intent intent = new Intent(MainActivity.this, UpcomingActivity.class);
             startActivity(intent);
         } else if (id == R.id.log) {
             Toast.makeText(this, "logout is selected", Toast.LENGTH_LONG).show();
