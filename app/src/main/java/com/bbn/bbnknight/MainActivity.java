@@ -57,15 +57,8 @@ public class MainActivity extends AppCompatActivity
             SetClassActivity.mClasses = gson.fromJson(json, type);
         }
 
-        //test code
+        // init weekly blocks
         BlocksInWeek.initBlocks();
-        String str = BlocksInWeek.weekBlock.get(0).get(0).name;
-        Log.i("Debin-1", "weekblock: " + str);
-        str = BlocksInWeek.weekBlock.get(1).get(1).name;
-        Log.i("Debin-2", "weekblock: " + str);
-
-
-
     }
 
     @Override
