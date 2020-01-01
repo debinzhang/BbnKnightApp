@@ -10,8 +10,8 @@
         android:id="@+id/addClassTitleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
         android:background="#EBEBEB"
         android:text="Add class"
         android:textSize="24sp"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="31dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -62,7 +62,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="2dp"
-        android:layout_marginTop="96dp">
+        android:layout_marginTop="77dp">
 
         <TextView
             android:id="@+id/textView5"
@@ -71,8 +71,8 @@
             android:layout_marginStart="19dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:background="#AAAAAA"
             android:text="Color"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,6 +83,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="190dp"
             android:onClick="openColorPicker"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -92,7 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="134dp">
+        android:layout_marginTop="115dp">
 
         <TextView
             android:id="@+id/locationTextView"
@@ -103,8 +104,9 @@
             android:layout_marginBottom="10dp"
             android:gravity="fill"
             android:text="Location"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/locationEditText"
@@ -114,8 +116,8 @@
             android:layout_marginEnd="0dp"
             android:ems="10"
             android:inputType="textPersonName"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -123,7 +125,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="183dp">
+        android:layout_marginTop="161dp">
 
         <TextView
             android:id="@+id/blockTextView"
@@ -134,8 +136,9 @@
             android:layout_marginBottom="10dp"
             android:gravity="fill"
             android:text="Block"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/blockEditText"
@@ -145,8 +148,8 @@
             android:layout_marginEnd="0dp"
             android:ems="10"
             android:inputType="textPersonName"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -154,7 +157,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="232dp">
+        android:layout_marginTop="208dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteY="323dp">
 
         <TextView
             android:id="@+id/daysTextView"
@@ -165,8 +172,9 @@
             android:layout_marginBottom="10dp"
             android:gravity="fill"
             android:text="Days"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/daysEditText"
@@ -176,8 +184,8 @@
             android:layout_marginEnd="0dp"
             android:ems="10"
             android:inputType="textPersonName"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -190,7 +198,7 @@
         android:layout_marginTop="225dp"
         android:layout_marginEnd="65dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="300dp"
+        android:layout_marginBottom="280dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
