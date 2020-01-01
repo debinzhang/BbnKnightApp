@@ -9,9 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".NotificaitonConfigureActivity"></activity>
+        <activity android:name=".ConfigureSpecialBlockActivity" />
         <activity android:name=".configureLunchBlockActivity"></activity>
+        <activity android:name=".addOrDelClassActivity" />
         <activity android:name=".FutureDayActivity" />
-        <activity android:name=".addNewClassActivity" />
         <activity android:name=".UpcomingActivity" />
         <activity android:name=".SetClassActivity" />
         <activity android:name=".MainActivity">
