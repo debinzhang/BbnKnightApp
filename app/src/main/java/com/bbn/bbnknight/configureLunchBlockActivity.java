@@ -86,8 +86,6 @@ public class configureLunchBlockActivity extends AppCompatActivity implements Ad
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         selectedBlock = adapterView.getItemAtPosition(i).toString();
-        Toast.makeText(adapterView.getContext(),selectedBlock,Toast.LENGTH_SHORT).show();
-
 
         switch(adapterView.getId()) {
             case R.id.MondayLunch:
