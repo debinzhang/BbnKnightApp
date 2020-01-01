@@ -22,13 +22,16 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+    Date currentTime;
 
 
     @Override
@@ -88,6 +91,10 @@ public class MainActivity extends AppCompatActivity
 
                 break;
             case R.id.setLunch:
+                Toast.makeText(getApplicationContext(), "class setting selected", Toast.LENGTH_LONG).show();
+
+                Intent Lunchintent = new Intent(getApplicationContext(), configureLunchBlockActivity.class);
+                startActivity(Lunchintent);
                 Toast.makeText(getApplicationContext(), "lunch setting selected", Toast.LENGTH_LONG).show();
                 break;
             case R.id.profile:

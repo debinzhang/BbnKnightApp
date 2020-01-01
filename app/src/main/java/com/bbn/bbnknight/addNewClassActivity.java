@@ -92,9 +92,9 @@ public class addNewClassActivity extends AppCompatActivity implements AdapterVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("Evan", "onCreate 1");
+//        Log.i("Evan", "onCreate 1");
         setContentView(R.layout.activity_add_new_class);
-        Log.i("Evan", "onCreate 2");
+//        Log.i("Evan", "onCreate 2");
 
         //mColor  = ContextCompat.getColor(this, R.color.colorPrimary);
         mColor = 0xAAAAAA; // default color, defined in xml
