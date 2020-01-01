@@ -3,8 +3,10 @@ package com.bbn.bbnknight;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,13 +16,14 @@ import com.google.gson.Gson;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
-public class addNewClassActivity extends AppCompatActivity {
+public class addOrDelClassActivity extends AppCompatActivity {
     int mColor;
     EditText mClassNameEditText;
     EditText mLocationEditText;
     EditText mBlockEditText;
     EditText mDaysEditText;
     Button mPickColorButton;
+    int classIndex = -1;
 
     // pick color button clicked
     public void openColorPicker(View view) {
@@ -37,6 +40,16 @@ public class addNewClassActivity extends AppCompatActivity {
             }
         });
         colorPicker.show();
+    }
+
+    public void saveClassInfo() {
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(
+                "com.bbn.bbnknight", Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(SetClassActivity.mClasses);
+        prefsEditor.putString("classes", json);
+        prefsEditor.commit();
     }
 
     // Save button clicked
@@ -67,34 +80,70 @@ public class addNewClassActivity extends AppCompatActivity {
         SetClassActivity.mClasses.add(classItem);
         SetClassActivity.mClassListAdaptor.notifyDataSetChanged();
 
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(
-                "com.bbn.bbnknight", Context.MODE_PRIVATE);
-        SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(SetClassActivity.mClasses);
-        prefsEditor.putString("classes", json);
-        prefsEditor.commit();
+        saveClassInfo();
 
         finish();
     }
 
     // Cancle button clicked
     public void cancelButtonClicked(View view) {
-        Toast.makeText(this, "Cancleclass", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    // Delete button clicked
+    public void delButtonClicked(View view) {
+        if (classIndex != -1) {
+            SetClassActivity.mClasses.remove(classIndex);
+            SetClassActivity.mClassListAdaptor.notifyDataSetChanged();
+            saveClassInfo();
+        }
         finish();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_class);
+        setContentView(R.layout.activity_add_del_class);
+        boolean addNewClass = false;
+        String action;
+        String className, location, block, days;
 
-        //mColor  = ContextCompat.getColor(this, R.color.colorPrimary);
-        mColor = 0xAAAAAA; // default color, defined in xml
         mClassNameEditText = findViewById(R.id.classNameEditText);
         mBlockEditText = findViewById(R.id.blockEditText);
         mLocationEditText = findViewById(R.id.locationEditText);
         mDaysEditText = findViewById(R.id.daysEditText);
         mPickColorButton = findViewById(R.id.pickColorButton);
+
+        Intent intent = getIntent();
+        action = intent.getStringExtra("action");
+        classIndex = intent.getIntExtra("classId", -1);
+        if (action.equals("add")) {
+            addNewClass = true;
+        } else {
+            if (!action.equals("edit")) {
+                Log.i("Debin", "Invalid edit class action: " + action);
+                finish();
+            }
+        }
+
+        if (addNewClass) {
+            mColor = 0xAAAAAA; // default color, defined in xml
+        } else {
+            // this is the edit class case
+            SetClassActivity.ClassItem classItem = SetClassActivity.mClasses.get(classIndex);
+            Log.i("Debin", "Select classId: " + classIndex);
+            mColor = classItem.color;
+            className = classItem.name;
+            location = classItem.location;
+            block = classItem.block;
+            days = classItem.days;
+
+            mClassNameEditText.setText(className);
+            mClassNameEditText.setTextColor(mColor);
+            mBlockEditText.setText(block);
+            mLocationEditText.setText(location);
+            mDaysEditText.setText(days);
+            mPickColorButton.setBackgroundColor(mColor);
+        }
     }
 }

@@ -10,14 +10,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SetClassActivity extends AppCompatActivity {
     public static class ClassItem {
@@ -34,9 +33,8 @@ public class SetClassActivity extends AppCompatActivity {
 
     // on click Add Class button
     public void addClassButtonClicked(View view) {
-        Log.i("Debin", "addClassButtonClicked");
-        Toast.makeText(this, "addClassButtonClicked!", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(this, addNewClassActivity.class);
+        Intent intent = new Intent(this, addOrDelClassActivity.class);
+        intent.putExtra("action", "add");
         startActivity(intent);
     }
 
@@ -49,6 +47,16 @@ public class SetClassActivity extends AppCompatActivity {
         mClassListAdaptor = new ClassListAdaptor(this, android.R.layout.simple_list_item_1,
                 mClasses);
         mListView.setAdapter(mClassListAdaptor);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(SetClassActivity.this, addOrDelClassActivity.class);
+                intent.putExtra("action", "edit");
+                intent.putExtra("classId", i);
+                startActivity(intent);
+            }
+        });
     }
 
     class ClassListAdaptor extends ArrayAdapter<ClassItem> {

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".FutureDayActivity"></activity>
-        <activity android:name=".addNewClassActivity" />
+        <activity android:name=".addOrDelClassActivity" />
         <activity android:name=".UpcomingActivity" />
         <activity android:name=".SetClassActivity" />
         <activity android:name=".MainActivity">
