@@ -52,7 +52,7 @@ public class BlocksInWeek {
         dayBlock.add(blockItem);
         blockItem = new BlockItem(F_BLOCK, "7:45am", "8:00am", true);
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(G_BLOCK, "8:00am", "8:45am", true);
+        blockItem = new BlockItem(E_BLOCK, "8:00am", "8:45am", true);
         dayBlock.add(blockItem);
         weekBlock.add(dayBlock);
 
@@ -72,7 +72,7 @@ public class BlocksInWeek {
         dayBlock.add(blockItem);
         blockItem = new BlockItem(F_BLOCK, "7:45am", "8:00am", true);
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(G_BLOCK, "8:00am", "8:45am", true);
+        blockItem = new BlockItem(E_BLOCK, "8:00am", "8:45am", true);
         dayBlock.add(blockItem);
         weekBlock.add(dayBlock);
 
@@ -92,7 +92,7 @@ public class BlocksInWeek {
         dayBlock.add(blockItem);
         blockItem = new BlockItem(F_BLOCK, "7:45am", "8:00am", true);
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(G_BLOCK, "8:00am", "8:45am", true);
+        blockItem = new BlockItem(E_BLOCK, "8:00am", "8:45am", true);
         dayBlock.add(blockItem);
         weekBlock.add(dayBlock);
 

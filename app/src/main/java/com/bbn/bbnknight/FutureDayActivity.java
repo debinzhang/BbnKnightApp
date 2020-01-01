@@ -38,7 +38,6 @@ public class FutureDayActivity extends AppCompatActivity {
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            Log.i("Debin", "getView...position: " + position);
             View view = getLayoutInflater().inflate(R.layout.block_item_layout, null);
             TextView classNameTv = view.findViewById(R.id.classNameTv);
             TextView timeTv = view.findViewById(R.id.timeTv);
@@ -48,13 +47,35 @@ public class FutureDayActivity extends AppCompatActivity {
             String startTime = block.start_time;
             String endTime = block.end_time;
             String blockName = block.name;
-            Log.i("Debin", "blockName:" + blockName + "... startTime: " + startTime + " ... endTime:" + endTime);
+            String className = "No Class";
+            int color = 0;
+            String location = "N/A";
 
-            classNameTv.setText("Math");
+            // find block's corresponding class
+            //  static public ArrayList<ClassItem> mClasses = new ArrayList<>();
+            boolean classFound = false;
+            for (SetClassActivity.ClassItem classItem : SetClassActivity.mClasses) {
+              if (classItem.block.equals(blockName)) {
+                  classFound = true;
+                  className = classItem.name;
+                  color = classItem.color;
+                  location = classItem.location;
+                  Log.i("Debin", "found class");
+                  break;
+              }
+            }
+
+            classNameTv.setText(className);
             timeTv.setText(block.start_time + " - " + block.end_time);
             blockNameTv.setText(block.name);
-            roomTv.setText("123");
+            roomTv.setText(location);
 
+            if (classFound) {
+              classNameTv.setTextColor(color);
+              timeTv.setTextColor(color);
+              blockNameTv.setTextColor(color);
+              roomTv.setTextColor(color);
+            }
 
             return view;
         }
@@ -75,32 +96,21 @@ public class FutureDayActivity extends AppCompatActivity {
         Log.i("Debin", "Receiving date: " + (mMonth+1) + "/" + mDay + "/" + mYear);
 
         if (mDayOfWeek != -1 && mDayOfWeek >= 2 && mDayOfWeek <= 6) {
-            Log.i("Debin", "futureDayActivity get dayOfWeek: " + mDayOfWeek);
             // dayofWeek: Sun:1, Mon:2, Tue:3, W:4, Th:5, F:6, Sat:7
             mSelectDayBlocks = BlocksInWeek.weekBlock.get(mDayOfWeek - 2);
 
             if (mSelectDayBlocks == null) {
                 Log.i("Debin", "Get Null mBlock");
                 return;
-            }
-
-            String str = mSelectDayBlocks.get(1).name;
-            Log.i("Debin-10", "weekblock: " + str);
-            str = mSelectDayBlocks.get(2).name;
-            Log.i("Debin-20", "weekblock: " + str);
+            };
         } else {
             Toast.makeText(FutureDayActivity.this, "Invalid day of week:" + mDayOfWeek,
                     Toast.LENGTH_LONG).show();
             return;
         }
 
-        Log.i("Debin", "futureDayActivity 1");
         mBlockListAdaptor = new BlockListAdaptor(FutureDayActivity.this,
                 android.R.layout.simple_list_item_1, mSelectDayBlocks);
-        Log.i("Debin", "futureDayActivity 2");
-        
         mListView.setAdapter(mBlockListAdaptor);
-        Log.i("Debin", "futureDayActivity 3");
-
     }
 }
