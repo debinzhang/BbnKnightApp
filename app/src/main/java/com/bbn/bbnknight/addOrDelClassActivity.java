@@ -10,8 +10,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -20,15 +23,16 @@ import java.util.HashSet;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
-public class addOrDelClassActivity extends AppCompatActivity {
+public class addOrDelClassActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     int mColor;
     EditText mClassNameEditText;
     EditText mLocationEditText;
-    EditText mBlockEditText;
+    Spinner mBlockspinner;
     EditText mDaysEditText;
     Button mPickColorButton, mSaveButton, mDelButton, mCancelButton;
     int classIndex = -1;
     boolean addNewClass = false;
+    String selectedBlock;
 
     // pick color button clicked
     public void openColorPicker(View view) {
@@ -64,12 +68,13 @@ public class addOrDelClassActivity extends AppCompatActivity {
             Toast.makeText(this, "class name CANNOT be empty", Toast.LENGTH_LONG).show();
             return;
         }
+
         String location = mLocationEditText.getText().toString();
         if (location.isEmpty()) {
             Toast.makeText(this, "Location CANNOT be empty", Toast.LENGTH_LONG).show();
             return;
         }
-        String block = mBlockEditText.getText().toString();
+        String block = selectedBlock;
         if (block.isEmpty()) {
             Toast.makeText(this, "Block CANNOT be empty", Toast.LENGTH_LONG).show();
             return;
@@ -141,7 +146,13 @@ public class addOrDelClassActivity extends AppCompatActivity {
         String className, location, block, days;
 
         mClassNameEditText = findViewById(R.id.classNameEditText);
-        mBlockEditText = findViewById(R.id.blockEditText);
+
+        mBlockspinner = findViewById(R.id.blockspinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.classBlocks, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mBlockspinner.setAdapter(adapter);
+        mBlockspinner.setOnItemSelectedListener(this);
+
         mLocationEditText = findViewById(R.id.locationEditText);
         mDaysEditText = findViewById(R.id.daysEditText);
         mPickColorButton = findViewById(R.id.pickColorButton);
@@ -180,10 +191,22 @@ public class addOrDelClassActivity extends AppCompatActivity {
 
             mClassNameEditText.setText(className);
             mClassNameEditText.setTextColor(mColor);
-            mBlockEditText.setText(block);
+            mBlockspinner.setTooltipText(block);
             mLocationEditText.setText(location);
             mDaysEditText.setText(days);
             mPickColorButton.setBackgroundColor(mColor);
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        selectedBlock = adapterView.getItemAtPosition(i).toString();
+        Toast.makeText(adapterView.getContext(),selectedBlock,Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

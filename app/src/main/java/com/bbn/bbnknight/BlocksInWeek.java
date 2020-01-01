@@ -19,6 +19,7 @@ public class BlocksInWeek {
     public static final String H_BLOCK  = "H Block";
     public static final String LUNCH_BLOCK  = "Lunch";
     public static final String ADVISORY_BLOCK  = "Advisory";
+    public static final String ACTIVITIES = "Activities";
 
     public static class BlockItem {
         String name;
