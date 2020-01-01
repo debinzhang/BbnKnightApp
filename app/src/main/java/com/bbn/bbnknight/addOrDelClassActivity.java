@@ -1,8 +1,10 @@
 package com.bbn.bbnknight;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,6 +16,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.HashSet;
+
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class addOrDelClassActivity extends AppCompatActivity {
@@ -22,8 +26,9 @@ public class addOrDelClassActivity extends AppCompatActivity {
     EditText mLocationEditText;
     EditText mBlockEditText;
     EditText mDaysEditText;
-    Button mPickColorButton;
+    Button mPickColorButton, mSaveButton, mDelButton, mCancelButton;
     int classIndex = -1;
+    boolean addNewClass = false;
 
     // pick color button clicked
     public void openColorPicker(View view) {
@@ -77,7 +82,12 @@ public class addOrDelClassActivity extends AppCompatActivity {
         classItem.block = block;
         classItem.color = mColor;
         classItem.days = days;
-        SetClassActivity.mClasses.add(classItem);
+        if (addNewClass) {
+            SetClassActivity.mClasses.add(classItem);
+        } else {
+            // this is the edit case, just update class
+            SetClassActivity.mClasses.set(classIndex, classItem);
+        }
         SetClassActivity.mClassListAdaptor.notifyDataSetChanged();
 
         saveClassInfo();
@@ -92,19 +102,41 @@ public class addOrDelClassActivity extends AppCompatActivity {
 
     // Delete button clicked
     public void delButtonClicked(View view) {
-        if (classIndex != -1) {
-            SetClassActivity.mClasses.remove(classIndex);
-            SetClassActivity.mClassListAdaptor.notifyDataSetChanged();
-            saveClassInfo();
-        }
-        finish();
+        if (classIndex == -1)
+            return;
+
+        Log.i("Debin", "delete button is clicked.0");
+        AlertDialog.Builder alertDiaglogBuilder = new AlertDialog.Builder(this);
+        alertDiaglogBuilder
+                .setTitle("Are you sure?")
+                .setMessage("do you really want to delete this class")
+                .setCancelable(false)
+                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        SetClassActivity.mClasses.remove(classIndex);
+                        SetClassActivity.mClassListAdaptor.notifyDataSetChanged();
+                        saveClassInfo();
+                        finish();
+                    }
+                })
+                .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDiaglogBuilder.create();
+        alertDialog.show();
+
+        //finish();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_del_class);
-        boolean addNewClass = false;
         String action;
         String className, location, block, days;
 
@@ -113,6 +145,9 @@ public class addOrDelClassActivity extends AppCompatActivity {
         mLocationEditText = findViewById(R.id.locationEditText);
         mDaysEditText = findViewById(R.id.daysEditText);
         mPickColorButton = findViewById(R.id.pickColorButton);
+        mSaveButton = findViewById(R.id.newClassSaveButton);
+        mDelButton = findViewById(R.id.editClassDelButton);
+        mCancelButton = findViewById(R.id.editClassCancelButton);
 
         Intent intent = getIntent();
         action = intent.getStringExtra("action");
@@ -124,6 +159,11 @@ public class addOrDelClassActivity extends AppCompatActivity {
                 Log.i("Debin", "Invalid edit class action: " + action);
                 finish();
             }
+        }
+
+        if (addNewClass) {
+            // do not show delete button if user is to add new class
+            mDelButton.setVisibility(View.INVISIBLE);
         }
 
         if (addNewClass) {
