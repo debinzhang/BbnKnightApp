@@ -19,4 +19,9 @@
         <item>1st Lunch</item>
         <item>2nd Lunch</item>
     </string-array>
+    <string-array name="blockNotificationTimes">
+        <item>None</item>
+        <item>Before Block</item>
+        <item>End of Block</item>
+    </string-array>
 </resources>

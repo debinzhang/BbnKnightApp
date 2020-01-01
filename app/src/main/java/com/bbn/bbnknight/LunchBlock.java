@@ -29,4 +29,9 @@ public class LunchBlock {
         return weekLunch[dayOfWeek];
     }
 
+    public boolean[] getLunchTimeArray() {
+        return weekLunch;
+    }
+
+
 }

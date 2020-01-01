@@ -82,6 +82,8 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.setBlock:
                 Toast.makeText(getApplicationContext(), "block setting selected", Toast.LENGTH_LONG).show();
+                Intent blockIntent = new Intent(getApplicationContext(),ConfigureSpecialBlockActivity.class);
+                startActivity(blockIntent);
                 break;
             case R.id.setClass:
                 Toast.makeText(getApplicationContext(), "class setting selected", Toast.LENGTH_LONG).show();
