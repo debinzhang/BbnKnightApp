@@ -81,11 +81,8 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(getApplicationContext(), "block setting selected", Toast.LENGTH_LONG).show();
                 break;
             case R.id.setClass:
-                Toast.makeText(getApplicationContext(), "class setting selected", Toast.LENGTH_LONG).show();
-
                 Intent intent = new Intent(getApplicationContext(), SetClassActivity.class);
                 startActivity(intent);
-
                 break;
             case R.id.setLunch:
                 Toast.makeText(getApplicationContext(), "lunch setting selected", Toast.LENGTH_LONG).show();
@@ -110,8 +107,6 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.Today) {
             Toast.makeText(this, "Today is selected", Toast.LENGTH_LONG).show();
         } else if (id == R.id.Upcoming) {
-            Toast.makeText(this, "Upcoming is selected", Toast.LENGTH_LONG).show();
-
             Intent intent = new Intent(MainActivity.this, UpcomingActivity.class);
             startActivity(intent);
         } else if (id == R.id.log) {
