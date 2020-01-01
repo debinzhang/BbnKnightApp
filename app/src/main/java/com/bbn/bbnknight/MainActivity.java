@@ -59,9 +59,9 @@ public class MainActivity extends AppCompatActivity
 
         //test code
         BlocksInWeek.initBlocks();
-        String str = BlocksInWeek.weekBlock.get(0).getBlock(0).name;
+        String str = BlocksInWeek.weekBlock.get(0).get(0).name;
         Log.i("Debin-1", "weekblock: " + str);
-        str = BlocksInWeek.weekBlock.get(1).getBlock(1).name;
+        str = BlocksInWeek.weekBlock.get(1).get(1).name;
         Log.i("Debin-2", "weekblock: " + str);
 
 

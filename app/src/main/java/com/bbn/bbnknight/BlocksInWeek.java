@@ -3,7 +3,7 @@ package com.bbn.bbnknight;
 import java.util.ArrayList;
 
 public class BlocksInWeek {
-    public static ArrayList<DayBlock> weekBlock = new ArrayList<>();
+    public static ArrayList<ArrayList<BlockItem>> weekBlock = new ArrayList<>();
 
     public enum Day {
         SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
@@ -33,120 +33,107 @@ public class BlocksInWeek {
         }
     };
 
-    public static class DayBlock {
-        ArrayList<BlockItem> dayBlock;
-        DayBlock() {
-            dayBlock = new ArrayList<BlockItem>();
-        }
-        public void addBlock(BlockItem block) {
-            dayBlock.add(block);
-        }
-        public BlockItem getBlock(int i) {
-            return dayBlock.get(i);
-        }
-    }
-
     public static void initBlocks() {
-        DayBlock dayBlock;
+        ArrayList<BlockItem> dayBlock;
         BlockItem blockItem;
         // Monday
-        dayBlock = new DayBlock();
+        dayBlock = new ArrayList<BlockItem>();
         blockItem = new BlockItem(ADVISORY_BLOCK, "7:45am", "8:00am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(A_BLOCK, "8:00am", "8:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(B_BLOCK, "9:00m", "9:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(C_BLOCK, "10:00am", "10:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(D_BLOCK, "11:00am", "11:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(LUNCH_BLOCK, "12:00am", "12:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(F_BLOCK, "7:45am", "8:00am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(G_BLOCK, "8:00am", "8:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         weekBlock.add(dayBlock);
 
         // Tuesday
-        dayBlock = new DayBlock();
+        dayBlock = new ArrayList<BlockItem>();
         blockItem = new BlockItem(ADVISORY_BLOCK, "7:45am", "8:00am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(B_BLOCK, "8:00am", "8:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(A_BLOCK, "9:00m", "9:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(C_BLOCK, "10:00am", "10:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(D_BLOCK, "11:00am", "11:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(LUNCH_BLOCK, "12:00am", "12:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(F_BLOCK, "7:45am", "8:00am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(G_BLOCK, "8:00am", "8:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         weekBlock.add(dayBlock);
 
         // Wednesday
-        dayBlock = new DayBlock();
+        dayBlock = new ArrayList<BlockItem>();
         blockItem = new BlockItem(ADVISORY_BLOCK, "7:45am", "8:00am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(C_BLOCK, "8:00am", "8:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(A_BLOCK, "9:00m", "9:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(B_BLOCK, "10:00am", "10:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(D_BLOCK, "11:00am", "11:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(LUNCH_BLOCK, "12:00am", "12:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(F_BLOCK, "7:45am", "8:00am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(G_BLOCK, "8:00am", "8:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         weekBlock.add(dayBlock);
 
         // Thursday
-        dayBlock = new DayBlock();
+        dayBlock = new ArrayList<BlockItem>();
         blockItem = new BlockItem(ADVISORY_BLOCK, "7:45am", "8:00am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(D_BLOCK, "8:00am", "8:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(A_BLOCK, "9:00m", "9:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(B_BLOCK, "10:00am", "10:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(C_BLOCK, "11:00am", "11:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(LUNCH_BLOCK, "12:00am", "12:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(F_BLOCK, "7:45am", "8:00am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(G_BLOCK, "8:00am", "8:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         weekBlock.add(dayBlock);
 
         // Fridday
-        dayBlock = new DayBlock();
+        dayBlock = new ArrayList<BlockItem>();
         blockItem = new BlockItem(ADVISORY_BLOCK, "7:45am", "8:00am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(E_BLOCK, "8:00am", "8:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(A_BLOCK, "9:00m", "9:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(B_BLOCK, "10:00am", "10:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(C_BLOCK, "11:00am", "11:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(LUNCH_BLOCK, "12:00am", "12:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(A_BLOCK, "7:45am", "8:00am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         blockItem = new BlockItem(G_BLOCK, "8:00am", "8:45am", true);
-        dayBlock.addBlock(blockItem);
+        dayBlock.add(blockItem);
         weekBlock.add(dayBlock);
     }
 }
