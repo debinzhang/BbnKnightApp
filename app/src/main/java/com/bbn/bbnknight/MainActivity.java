@@ -60,6 +60,18 @@ public class MainActivity extends AppCompatActivity
             SetClassActivity.mClasses = gson.fromJson(json, type);
         }
 
+        for (int i=0; i<configureLunchBlockActivity.mLunchBlocks.length; i++) {
+            Log.i("Evan", "xxx i=" + i);
+            //configureLunchBlockActivity.mLunchBlocks[i] =
+            String str = sharedPreferences.getString("lunch_"+i, "");
+            if (str.equals("false")) {
+                configureLunchBlockActivity.mLunchBlocks[i] = false;
+            } else {
+                configureLunchBlockActivity.mLunchBlocks[i] = true;
+            }
+            Log.i("Evan", "retrieve lunch["+i+"] =" + str);
+        }
+
         // init weekly blocks
         BlocksInWeek.initBlocks();
     }

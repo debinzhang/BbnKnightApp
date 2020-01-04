@@ -44,12 +44,13 @@ public class FutureDayActivity extends AppCompatActivity {
             TextView blockNameTv = view.findViewById(R.id.blockNameTv);
             TextView roomTv = view.findViewById(R.id.roomTv);
             BlocksInWeek.BlockItem block = mSelectDayBlocks.get(position);
-            String startTime = block.start_time;
-            String endTime = block.end_time;
             String blockName = block.name;
+            BlocksInWeek.Block_Type type = block.type;
             String className = "No Class";
             int color = 0;
             String location = "N/A";
+            boolean first_lunch = !configureLunchBlockActivity.mLunchBlocks[mDayOfWeek-2];
+            boolean isLunchBlock = false;
 
             // find block's corresponding class
             //  static public ArrayList<ClassItem> mClasses = new ArrayList<>();
@@ -71,10 +72,33 @@ public class FutureDayActivity extends AppCompatActivity {
             roomTv.setText(location);
 
             if (classFound) {
-              classNameTv.setTextColor(color);
-              timeTv.setTextColor(color);
-              blockNameTv.setTextColor(color);
-              roomTv.setTextColor(color);
+                classNameTv.setTextColor(color);
+                timeTv.setTextColor(color);
+                blockNameTv.setTextColor(color);
+                roomTv.setTextColor(color);
+            }
+
+            // adjust for lunch block
+            if (type == BlocksInWeek.Block_Type.WITH_LUNCH && first_lunch) {
+                timeTv.setText(block.alt_start_time + " - " + block.alt_end_time);
+                isLunchBlock = true;
+            }
+
+            if (type == BlocksInWeek.Block_Type.LUNCH) {
+                if(!first_lunch) {
+                    isLunchBlock = true;
+                } else {
+                    timeTv.setText(block.alt_start_time + " - " + block.alt_end_time);
+                }
+            }
+
+            if (isLunchBlock) {
+                classNameTv.setText(BlocksInWeek.LUNCH_BLOCK);
+                classNameTv.setTextColor(0xFF00FFFF); // set lunch color to Cyan
+                blockNameTv.setText("");
+                roomTv.setText("Cafeteria");
+                roomTv.setTextColor(0xFF00FFFF);
+                timeTv.setTextColor(0xFF00FFFF);
             }
 
             return view;

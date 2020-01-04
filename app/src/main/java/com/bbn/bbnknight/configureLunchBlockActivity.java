@@ -35,19 +35,27 @@ public class configureLunchBlockActivity extends AppCompatActivity implements Ad
     ArrayAdapter<CharSequence> mondayAdapter;
     Button saveButton;
     Button cancelButton;
-    LunchBlock mLunchBlock;
+    // default to false. false: 1st lunch; true: 2nd lunch
+    public static boolean[] mLunchBlocks = new boolean[5];
+
     String selectedBlock;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("Evan", "Class onCreate");
         super.onCreate(savedInstanceState);
-        Log.i("Evan","LunchCreate1");
+        Log.i("Evan", "LunchCreate1");
         setContentView(R.layout.activity_configure_lunch_block);
-        Log.i("Evan","LunchCreate2");
+        Log.i("Evan", "LunchCreate2");
         mondayScroll = findViewById(R.id.MondayLunch);
-        mondayAdapter = ArrayAdapter.createFromResource(this,R.array.lunchTime, android.R.layout.simple_spinner_item);
+        mondayAdapter = ArrayAdapter.createFromResource(this, R.array.lunchTime, android.R.layout.simple_spinner_item);
         mondayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mondayScroll.setAdapter(mondayAdapter);
         mondayScroll.setOnItemSelectedListener(this);
+        if (!mLunchBlocks[0]) {
+            mondayScroll.setSelection(0);
+        } else {
+            mondayScroll.setSelection(1);
+        }
         mondayText = findViewById(R.id.Monday);
 
         tuesdayScroll = findViewById(R.id.TuesdayLunch);
@@ -55,6 +63,11 @@ public class configureLunchBlockActivity extends AppCompatActivity implements Ad
         tuesdayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tuesdayScroll.setAdapter(tuesdayAdapter);
         tuesdayScroll.setOnItemSelectedListener(this);
+        if (!mLunchBlocks[1]) {
+            tuesdayScroll.setSelection(0);
+        } else {
+            tuesdayScroll.setSelection(1);
+        }
         tuesdayText = findViewById(R.id.Tuesday);
 
         wednesdayScroll = findViewById(R.id.WednesdayLunch);
@@ -62,6 +75,11 @@ public class configureLunchBlockActivity extends AppCompatActivity implements Ad
         wednesdayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         wednesdayScroll.setAdapter(wednesdayAdapter);
         wednesdayScroll.setOnItemSelectedListener(this);
+        if (!mLunchBlocks[2]) {
+            wednesdayScroll.setSelection(0);
+        } else {
+            wednesdayScroll.setSelection(1);
+        }
         wednesdayText = findViewById(R.id.Wednesday);
 
         thursdayScroll = findViewById(R.id.ThursdayLunch);
@@ -69,6 +87,11 @@ public class configureLunchBlockActivity extends AppCompatActivity implements Ad
         thursdayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         thursdayScroll.setAdapter(thursdayAdapter);
         thursdayScroll.setOnItemSelectedListener(this);
+        if (!mLunchBlocks[3]) {
+            thursdayScroll.setSelection(0);
+        } else {
+            thursdayScroll.setSelection(1);
+        }
         thursdayText = findViewById(R.id.Thursday);
 
         fridayScroll = findViewById(R.id.FridayLunch);
@@ -76,11 +99,15 @@ public class configureLunchBlockActivity extends AppCompatActivity implements Ad
         fridayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         fridayScroll.setAdapter(fridayAdapter);
         fridayScroll.setOnItemSelectedListener(this);
+        if (!mLunchBlocks[4]) {
+            fridayScroll.setSelection(0);
+        } else {
+            fridayScroll.setSelection(1);
+        }
         fridayText = findViewById(R.id.Friday);
 
         saveButton = findViewById(R.id.newClassSaveButton);
         cancelButton = findViewById(R.id.newClassCancelButton);
-        mLunchBlock = new LunchBlock();
     }
 
     @Override
@@ -90,43 +117,50 @@ public class configureLunchBlockActivity extends AppCompatActivity implements Ad
         switch(adapterView.getId()) {
             case R.id.MondayLunch:
                 Log.i("Evan","Enter into Selection");
-                if(adapterView.getItemAtPosition(i).toString() == "1st Lunch") {
-                    mLunchBlock.setLunchTime(true, 0);
+                if(adapterView.getItemAtPosition(i).toString().equals("1st Lunch")) {
+                    Log.i("Evan","select first lunch");
+                    mLunchBlocks[0] = false;
                 } else {
-                    mLunchBlock.setLunchTime(false,0);
+                    Log.i("Evan","select 2nd lunch: str= " + adapterView.getItemAtPosition(i).toString());
+                    mLunchBlocks[0] = true;
                 }
                 Log.i("Evan", "clicked on Monday");
+                saveLunchSetting();
                 break;
             case R.id.TuesdayLunch:
-                if(adapterView.getItemAtPosition(i).toString() == "1st Lunch") {
-                    mLunchBlock.setLunchTime(true, 1);
+                if(adapterView.getItemAtPosition(i).toString().equals("1st Lunch")) {
+                    mLunchBlocks[1] = false;
                 } else {
-                    mLunchBlock.setLunchTime(false,1);
+                    mLunchBlocks[1] = true;
                 }
+                saveLunchSetting();
                 Log.i("Evan", "clicked on Tuesday");
                 break;
             case R.id.WednesdayLunch:
-                if(adapterView.getItemAtPosition(i).toString() == "1st Lunch") {
-                    mLunchBlock.setLunchTime(true, 2);
+                if(adapterView.getItemAtPosition(i).toString().equals("1st Lunch")) {
+                    mLunchBlocks[2] = false;
                 } else {
-                    mLunchBlock.setLunchTime(false,2);
+                    mLunchBlocks[2] = true;
                 }
+                saveLunchSetting();
                 Log.i("Evan", "clicked on Wednesday");
                 break;
             case R.id.ThursdayLunch:
-                if(adapterView.getItemAtPosition(i).toString() == "1st Lunch") {
-                    mLunchBlock.setLunchTime(true, 3);
+                if(adapterView.getItemAtPosition(i).toString().equals("1st Lunch")) {
+                    mLunchBlocks[3] = false;
                 } else {
-                    mLunchBlock.setLunchTime(false,3);
+                    mLunchBlocks[3] = true;
                 }
+                saveLunchSetting();
                 Log.i("Evan", "clicked on Thursday");
                 break;
             case R.id.FridayLunch:
-                if(adapterView.getItemAtPosition(i).toString() == "1st Lunch") {
-                    mLunchBlock.setLunchTime(true, 4);
+                if(adapterView.getItemAtPosition(i).toString().equals("1st Lunch")) {
+                    mLunchBlocks[4] = false;
                 } else {
-                    mLunchBlock.setLunchTime(false,4);
+                    mLunchBlocks[4] = true;
                 }
+                saveLunchSetting();
                 Log.i("Evan", "clicked on Friday");
                 break;
             default:
@@ -144,16 +178,20 @@ public class configureLunchBlockActivity extends AppCompatActivity implements Ad
         finish();
     }
 
-    public void saveButtonClicked(View view) {
-
+    public void saveLunchSetting() {
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(
                 "com.bbn.bbnknight", Context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(SetClassActivity.mClasses);
-        prefsEditor.putString("classes", json);
-        prefsEditor.commit();
 
+        for (int i=0; i<mLunchBlocks.length; i++) {
+            //prefsEditor.putBoolean("lunch_" + i, mLunchBlocks[i]);
+            prefsEditor.putString("lunch_"+i, Boolean.toString(mLunchBlocks[i]));
+        }
+        prefsEditor.commit();
+    }
+
+    public void saveButtonClicked(View view) {
+        saveLunchSetting();
         finish();
     }
 }
