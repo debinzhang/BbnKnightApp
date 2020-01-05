@@ -61,13 +61,12 @@ public class FutureDayActivity extends AppCompatActivity {
                   className = classItem.name;
                   color = classItem.color;
                   location = classItem.location;
-                  Log.i("Debin", "found class");
                   break;
               }
             }
 
             classNameTv.setText(className);
-            timeTv.setText(block.start_time + " - " + block.end_time);
+            timeTv.setText(block.start_time + " -> " + block.end_time);
             blockNameTv.setText(block.name);
             roomTv.setText(location);
 
@@ -80,7 +79,7 @@ public class FutureDayActivity extends AppCompatActivity {
 
             // adjust for lunch block
             if (type == BlocksInWeek.Block_Type.WITH_LUNCH && first_lunch) {
-                timeTv.setText(block.alt_start_time + " - " + block.alt_end_time);
+                timeTv.setText(block.alt_start_time + " -> " + block.alt_end_time);
                 isLunchBlock = true;
             }
 
@@ -88,17 +87,17 @@ public class FutureDayActivity extends AppCompatActivity {
                 if(!first_lunch) {
                     isLunchBlock = true;
                 } else {
-                    timeTv.setText(block.alt_start_time + " - " + block.alt_end_time);
+                    timeTv.setText(block.alt_start_time + " -> " + block.alt_end_time);
                 }
             }
 
             if (isLunchBlock) {
                 classNameTv.setText(BlocksInWeek.LUNCH_BLOCK);
-                classNameTv.setTextColor(0xFF00FFFF); // set lunch color to Cyan
+                classNameTv.setTextColor(0xFF008888); // set lunch color to Cyan
                 blockNameTv.setText("");
                 roomTv.setText("Cafeteria");
-                roomTv.setTextColor(0xFF00FFFF);
-                timeTv.setTextColor(0xFF00FFFF);
+                roomTv.setTextColor(0xFF008888);
+                timeTv.setTextColor(0xFF008888);
             }
 
             return view;

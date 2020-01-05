@@ -3,13 +3,13 @@ package com.bbn.bbnknight;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.style.UpdateAppearance;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,17 +22,13 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Calendar;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
-    Date currentTime;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +70,21 @@ public class MainActivity extends AppCompatActivity
 
         // init weekly blocks
         BlocksInWeek.initBlocks();
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new TodayFragment()).commit();
+            navigationView.setCheckedItem(R.id.Today);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -119,26 +130,26 @@ public class MainActivity extends AppCompatActivity
         int id = menuItem.getItemId();
 
         if (id == R.id.Today) {
-            Toast.makeText(this, "Today is selected", Toast.LENGTH_LONG).show();
-        } else if (id == R.id.Upcoming) {
-            Intent intent = new Intent(MainActivity.this, UpcomingActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.log) {
-            Toast.makeText(this, "logout is selected", Toast.LENGTH_LONG).show();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new TodayFragment()).commit();
+        } if (id == R.id.Upcoming) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new UpcomingFragment()).commit();
+        } if (id == R.id.log) {
+            Toast.makeText(MainActivity.this, "Logout is clicked", Toast.LENGTH_LONG).show();
         }
 
-        return false;
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
-
     // add setting menu
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.setting_menu, menu);
 
-
         return super.onCreateOptionsMenu(menu);
     }
+
 }

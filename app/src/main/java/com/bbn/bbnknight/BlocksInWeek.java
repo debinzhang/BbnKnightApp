@@ -38,6 +38,15 @@ public class BlocksInWeek {
         String alt_start_time;
         String alt_end_time;
 
+        public BlockItem(BlockItem block) {
+            this.name = block.name;
+            this.type = block.type;
+            this.start_time = block.start_time;
+            this.end_time = block.end_time;
+            this.alt_start_time = block.alt_start_time;
+            this.alt_end_time = block.alt_end_time;
+        }
+
         public BlockItem(String name, Block_Type type, String start_time, String end_time) {
             this.name = name;
             this.type = type;
@@ -60,56 +69,58 @@ public class BlocksInWeek {
 
         // Monday
         dayBlock = new ArrayList<BlockItem>();
-        blockItem = new BlockItem(ASSEMBLY_BLOCK, Block_Type.ASSEMBLY, "8:00am", "8:15am");
+        blockItem = new BlockItem(ASSEMBLY_BLOCK, Block_Type.ASSEMBLY, "8:00AM", "8:15AM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(D_BLOCK, Block_Type.REGULAR, "8:20am", "9:05am");
+        blockItem = new BlockItem(D_BLOCK, Block_Type.REGULAR, "8:20AM", "9:05AM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(B_BLOCK, Block_Type.WITH_LAB_CONF, "9:10m", "10:00am");
+        blockItem = new BlockItem(B_BLOCK, Block_Type.WITH_LAB_CONF, "9:10AM", "10:00AM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(B_BLOCK, Block_Type.LAB_CONF, "10:00m", "10:20am");
+        blockItem = new BlockItem(B_BLOCK, Block_Type.LAB_CONF, "10:00AM", "10:20AM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(F_BLOCK, Block_Type.REGULAR, "10:25am", "11:10am");
+        blockItem = new BlockItem(F_BLOCK, Block_Type.REGULAR, "10:25AM", "11:10AM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(A_BLOCK, Block_Type.WITH_LUNCH, "11:15am", "12:05pm",
-                "11:15am", "11:40am");
+        blockItem = new BlockItem(A_BLOCK, Block_Type.WITH_LUNCH, "11:15AM", "12:05PM",
+                "11:15AM", "11:40AM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(A_BLOCK, Block_Type.LUNCH, "12:10pm", "12:35pm",
-                "11:45am", "12:35am");
+        blockItem = new BlockItem(A_BLOCK, Block_Type.LUNCH, "12:10PM", "12:35PM",
+                "11:45AM", "12:35AM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(X_BLOCK, Block_Type.REGULAR, "12:40pm", "1:25pm");
+        blockItem = new BlockItem(X_BLOCK, Block_Type.REGULAR, "12:40PM", "1:25PM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(C_BLOCK, Block_Type.REGULAR, "1:30pm", "2:20pm");
+        blockItem = new BlockItem(C_BLOCK, Block_Type.REGULAR, "1:30PM", "2:20PM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(G_BLOCK, Block_Type.REGULAR, "2:25pm", "3:10pm");
+        blockItem = new BlockItem(G_BLOCK, Block_Type.REGULAR, "2:25PM", "3:10PM");
         dayBlock.add(blockItem);
         weekBlock.add(dayBlock);
 
         // Tuesday
         dayBlock = new ArrayList<BlockItem>();
-        blockItem = new BlockItem(ADVISORY_BLOCK, Block_Type.ADVISORY, "8:00am", "8:15am");
+        blockItem = new BlockItem(ADVISORY_BLOCK, Block_Type.ADVISORY, "8:00AM", "8:15AM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(E_BLOCK, Block_Type.REGULAR, "8:20am", "9:05am");
+        blockItem = new BlockItem(E_BLOCK, Block_Type.REGULAR, "8:20AM", "9:05AM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(C_BLOCK, Block_Type.WITH_LAB_CONF, "9:10m", "10:00am");
+        blockItem = new BlockItem(C_BLOCK, Block_Type.WITH_LAB_CONF, "9:10AM", "10:00AM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(C_BLOCK, Block_Type.LAB_CONF, "10:00m", "10:20am");
+        blockItem = new BlockItem(C_BLOCK, Block_Type.LAB_CONF, "10:00AM", "10:20AM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(D_BLOCK, Block_Type.REGULAR, "10:25am", "11:10am");
+        blockItem = new BlockItem(D_BLOCK, Block_Type.REGULAR, "10:25AM", "11:10AM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(B_BLOCK, Block_Type.WITH_LUNCH, "11:15am", "12:05am",
-                "11:15am", "11:40am");
+        blockItem = new BlockItem(B_BLOCK, Block_Type.WITH_LUNCH, "11:15AM", "12:05PM",
+                "11:15AM", "11:40AM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(B_BLOCK, Block_Type.LUNCH, "12:10am", "12:35am",
-                "11:45am", "12:35am");
+        blockItem = new BlockItem(B_BLOCK, Block_Type.LUNCH, "12:10AM", "12:35AM",
+                "11:45AM", "12:35AM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(X_BLOCK, Block_Type.REGULAR, "12:40am", "1:20pm");
+        blockItem = new BlockItem(X_BLOCK, Block_Type.REGULAR, "12:40AM", "1:20PM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(F_BLOCK, Block_Type.WITH_LAB_CONF, "1:25pm", "2:15pm");
+        blockItem = new BlockItem(F_BLOCK, Block_Type.WITH_LAB_CONF, "1:25PM", "2:15PM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(F_BLOCK, Block_Type.LAB_CONF, "2:15pm", "2:25pm");
+        blockItem = new BlockItem(F_BLOCK, Block_Type.LAB_CONF, "2:15PM", "2:25PM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(A_BLOCK, Block_Type.REGULAR, "2:40m", "3:25pm");
+        blockItem = new BlockItem(A_BLOCK, Block_Type.REGULAR, "2:40PM", "3:25PM");
         dayBlock.add(blockItem);
+        weekBlock.add(dayBlock);
+
 
         // Wednesday
 
