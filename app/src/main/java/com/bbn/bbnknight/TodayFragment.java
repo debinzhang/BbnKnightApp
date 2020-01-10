@@ -85,7 +85,7 @@ public class TodayFragment extends Fragment {
                 }
             }
             BlocksInWeek.BlockItem block = mViewInfo.remainingDayBlocks.get(position);
-            String blockName = block.name;
+            String blockNameStr = block.name;
             BlocksInWeek.Block_Type type = block.type;
             String className = "No Class";
             int color = 0;
@@ -97,18 +97,23 @@ public class TodayFragment extends Fragment {
             //  static public ArrayList<ClassItem> mClasses = new ArrayList<>();
             boolean classFound = false;
             for (SetClassActivity.ClassItem classItem : SetClassActivity.mClasses) {
-                if (classItem.block.equals(blockName)) {
+                if (classItem.block.equals(block.name)) {
                     classFound = true;
                     className = classItem.name;
                     color = classItem.color;
                     location = classItem.location;
+
+                    if (block.type == BlocksInWeek.Block_Type.LAB_CONF) {
+                        blockNameStr += " / lab conf";
+                    }
+
                     break;
                 }
             }
 
             classNameTv.setText(className);
             timeTv.setText(block.start_time + " -> " + block.end_time);
-            blockNameTv.setText(block.name);
+            blockNameTv.setText(blockNameStr);
             roomTv.setText(location);
 
             if (classFound) {
