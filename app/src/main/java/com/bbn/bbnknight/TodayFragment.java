@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,6 +78,8 @@ public class TodayFragment extends Fragment {
             TextView blockNameTv = view.findViewById(R.id.blockNameTv);
             TextView roomTv = view.findViewById(R.id.roomTv);
             TextView timeLeftTv = view.findViewById(R.id.timeLeftTv);
+            ImageView blockImageView = view.findViewById(R.id.blockImage);
+
             if (position == 0 && timeLeftTv!=null) {
                 if (mViewInfo.beforeSchoolStart) {
                     timeLeftTv.setText(mViewInfo.remainingMinutes + " minutes before school start");
@@ -92,6 +95,10 @@ public class TodayFragment extends Fragment {
             String location = "N/A";
             boolean first_lunch = !configureLunchBlockActivity.mLunchBlocks[mViewInfo.dayOfWeek.getValue()-1];
             boolean isLunchBlock = false;
+
+            if (blockImageView != null) {
+                blockImageView.setImageResource(block.blockImage);
+            }
 
             // find block's corresponding class
             //  static public ArrayList<ClassItem> mClasses = new ArrayList<>();
@@ -147,6 +154,14 @@ public class TodayFragment extends Fragment {
                 roomTv.setText("Cafeteria");
                 roomTv.setTextColor(0xFF008888);
                 timeTv.setTextColor(0xFF008888);
+            }
+
+            // if it is advisory or assembly or activities block, just show block name, no class name
+            if (block.type == BlocksInWeek.Block_Type.ADVISORY ||
+                    block.type == BlocksInWeek.Block_Type.ASSEMBLY ||
+                    block.type == BlocksInWeek.Block_Type.ACTIVITIES) {
+                classNameTv.setText(block.name);
+                blockNameTv.setText("");
             }
 
             return view;

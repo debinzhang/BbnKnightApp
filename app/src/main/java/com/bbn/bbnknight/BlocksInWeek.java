@@ -37,6 +37,52 @@ public class BlocksInWeek {
         String end_time;
         String alt_start_time;
         String alt_end_time;
+        int blockImage;
+
+        void setBlockImage() {
+            if(this.type == Block_Type.LAB_CONF) {
+                this.blockImage = R.drawable.lab;
+            } else {
+                switch (this.name) {
+                    case A_BLOCK:
+                        this.blockImage = R.drawable.letter_a_lg_icon;
+                        break;
+                    case B_BLOCK:
+                        this.blockImage = R.drawable.letter_b_pink_icon;
+                        break;
+                    case C_BLOCK:
+                        this.blockImage = R.drawable.letter_c_orange_icon;
+                        break;
+                    case D_BLOCK:
+                        this.blockImage = R.drawable.letter_d_blue_icon;
+                        break;
+                    case E_BLOCK:
+                        this.blockImage = R.drawable.letter_e_blue_icon;
+                        break;
+                    case F_BLOCK:
+                        this.blockImage = R.drawable.letter_f_red_icon;
+                        break;
+                    case G_BLOCK:
+                        this.blockImage = R.drawable.letter_g_violet_icon;
+                        break;
+                    case X_BLOCK:
+                        this.blockImage = R.drawable.letter_x_dg_icon;
+                        break;
+                    case LUNCH_BLOCK:
+                        this.blockImage = R.drawable.breakfast_icon;
+                        break;
+                    case ASSEMBLY_BLOCK:
+                        this.blockImage = R.drawable.assembly;
+                        break;
+                    case ADVISORY_BLOCK:
+                        this.blockImage = R.drawable.advisory;
+                        break;
+                    case ACTIVITIES_BLOCK:
+                        this.blockImage = R.drawable.activity;
+                        break;
+                }
+            }
+        }
 
         public BlockItem(BlockItem block) {
             this.name = block.name;
@@ -45,6 +91,7 @@ public class BlocksInWeek {
             this.end_time = block.end_time;
             this.alt_start_time = block.alt_start_time;
             this.alt_end_time = block.alt_end_time;
+            this.blockImage = block.blockImage;
         }
 
         public BlockItem(String name, Block_Type type, String start_time, String end_time) {
@@ -52,6 +99,7 @@ public class BlocksInWeek {
             this.type = type;
             this.start_time = start_time;
             this.end_time = end_time;
+            setBlockImage();
         }
 
         public BlockItem(String name, Block_Type type, String start_time, String end_time,
