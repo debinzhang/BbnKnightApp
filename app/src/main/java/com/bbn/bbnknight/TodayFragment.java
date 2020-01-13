@@ -2,7 +2,10 @@ package com.bbn.bbnknight;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.TestLooperManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -23,10 +27,9 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
+import java.util.Locale;
 
-import static com.bbn.bbnknight.FutureDayActivity.mBlockListAdaptor;
-import static java.time.temporal.ChronoUnit.MINUTES;
-
+import static java.time.temporal.ChronoUnit.MILLIS;
 
 public class TodayFragment extends Fragment {
     class ViewInfo {
@@ -34,23 +37,34 @@ public class TodayFragment extends Fragment {
         String message;
         View view;
         DayOfWeek dayOfWeek;
-        int remainingMinutes;
+        long remainingTimeMils;
         boolean beforeSchoolStart;
+        boolean beforeClassStart;
         ArrayList<BlocksInWeek.BlockItem> dayBlocks;
         ArrayList<BlocksInWeek.BlockItem> remainingDayBlocks;
 
         ViewInfo() {
+            resetViewInfo();
+        }
+
+        public void resetViewInfo() {
             isSchoolOn = false;
             message = "";
             view = null;
             remainingDayBlocks = null;
-            remainingMinutes = 0;
+            remainingTimeMils = 0;
             beforeSchoolStart = false;
+            beforeClassStart = false;
             remainingDayBlocks = new ArrayList<BlocksInWeek.BlockItem>();
         }
     }
 
     class TodayBlockListAdaptor extends ArrayAdapter<BlocksInWeek.BlockItem> {
+        public CountDownTimer mCountDownTimer;
+        private long mTimerLeftInMillis;
+        TextView mTimeLeftTv;
+        TextView mTimeLeftMsgTv;
+
         public TodayBlockListAdaptor(@NonNull Context context, int resource,
                                 ArrayList<BlocksInWeek.BlockItem> blockList) {
             super(context, resource, blockList);
@@ -58,7 +72,6 @@ public class TodayFragment extends Fragment {
 
         @Override
         public int getCount() {
-            //Log.i("Debin", "getCount: numOfBlock = " + mSelectDayBlocks.size());
             return mViewInfo.remainingDayBlocks.size();
         }
 
@@ -66,7 +79,6 @@ public class TodayFragment extends Fragment {
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             View view = null;
-            int remainingMinutes = 0;
             if (position == 0) {
                 // today's first block
                 view = getLayoutInflater().inflate(R.layout.block_item_layout_alt, null);
@@ -77,15 +89,19 @@ public class TodayFragment extends Fragment {
             TextView timeTv = view.findViewById(R.id.timeTv);
             TextView blockNameTv = view.findViewById(R.id.blockNameTv);
             TextView roomTv = view.findViewById(R.id.roomTv);
-            TextView timeLeftTv = view.findViewById(R.id.timeLeftTv);
             ImageView blockImageView = view.findViewById(R.id.blockImage);
 
-            if (position == 0 && timeLeftTv!=null) {
+            if (position == 0) {
+                mTimeLeftTv = view.findViewById(R.id.timeLeftTv);
+                mTimeLeftMsgTv = view.findViewById(R.id.timeLeftMsgTv);
                 if (mViewInfo.beforeSchoolStart) {
-                    timeLeftTv.setText(mViewInfo.remainingMinutes + " minutes before school start");
+                    mViewInfo.message = "to school start";
+                } else if (mViewInfo.beforeClassStart) {
+                    mViewInfo.message = "before class start";
                 } else {
-                    timeLeftTv.setText(mViewInfo.remainingMinutes + " minutes left for this class");
+                    mViewInfo.message = "left for class";
                 }
+                startTimer();
             }
             BlocksInWeek.BlockItem block = mViewInfo.remainingDayBlocks.get(position);
             String blockNameStr = block.name;
@@ -128,8 +144,8 @@ public class TodayFragment extends Fragment {
                 timeTv.setTextColor(color);
                 blockNameTv.setTextColor(color);
                 roomTv.setTextColor(color);
-                if (timeLeftTv != null && position == 0) {
-                    timeLeftTv.setTextColor(color);
+                if (mTimeLeftTv != null && position == 0) {
+                    mTimeLeftTv.setTextColor(color);
                 }
             }
 
@@ -162,25 +178,66 @@ public class TodayFragment extends Fragment {
                     block.type == BlocksInWeek.Block_Type.ACTIVITIES) {
                 classNameTv.setText(block.name);
                 blockNameTv.setText("");
+            } else if (block.type == BlocksInWeek.Block_Type.LUNCH) {
+                classNameTv.setText(BlocksInWeek.LUNCH_BLOCK);
+                blockNameTv.setText("");
             }
 
             return view;
+        }
+
+        private void startTimer() {
+            Log.i("Debin", "CountDownTimer started timer!!!!!!!: time: " + Integer.toString((int)mViewInfo.remainingTimeMils));
+            mCountDownTimer = new CountDownTimer(mViewInfo.remainingTimeMils, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    mTimerLeftInMillis = millisUntilFinished;
+                    updateCountDownText();
+                }
+
+                @Override
+                public void onFinish() {
+                    Log.i("Debin", "onFinish() called");
+                    Log.i("Debin", "Canceling countCDownTimer --------");
+                    mCountDownTimer.cancel();
+                    testFlag = true;
+                    mViewInfo.resetViewInfo();
+                    checkSchoolDay();
+
+                    Fragment frg = null;
+                    frg = getFragmentManager().findFragmentById(R.id.fragment_container);
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.detach(frg);
+                    ft.attach(frg);
+                    ft.commit();
+
+                }
+            }.start();
+        }
+
+        private void updateCountDownText() {
+            int minites = (int) mTimerLeftInMillis / 1000 / 60;
+            int seconds = (int) (mTimerLeftInMillis / 1000) % 60;
+
+            String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minites, seconds);
+            if (mTimeLeftTv != null) {
+                mTimeLeftTv.setText(timeLeftFormatted);
+                mTimeLeftMsgTv.setText(mViewInfo.message);
+            }
         }
     }
 
     ViewInfo mViewInfo;
     ListView mListView;
+    boolean testFlag = false;
 
-    //private ArrayList<BlocksInWeek.BlockItem> mSelectDayBlocks;
     private TodayBlockListAdaptor mTodayBlockListAdaptor;
-
 
     public void checkSchoolDay() {
         LocalDate date = LocalDate.now();
         DayOfWeek day = DayOfWeek.of(date.get(ChronoField.DAY_OF_WEEK));
 
-        day = DayOfWeek.TUESDAY; // for testing only
-        //day = DayOfWeek.SUNDAY; // for testing only
+        //day = DayOfWeek.TUESDAY; // for testing only
         mViewInfo.dayOfWeek = day;
 
         switch (day) {
@@ -212,14 +269,13 @@ public class TodayFragment extends Fragment {
 
         int blockNum = mViewInfo.dayBlocks.size();
         String lastBlockEndTime = mViewInfo.dayBlocks.get(blockNum - 1).end_time;
-        Log.i("Debin", "lastBlockEndTime: " + lastBlockEndTime);
-        //LocalTime endTimeLt = LocalTime.parse("2:00PM",
         LocalTime endTimeLt = LocalTime.parse(lastBlockEndTime,
                 DateTimeFormatter.ofPattern("h:mma"));
-        Log.i("Debin", " endtime= " + endTimeLt.toString());
-        //LocalTime now = LocalTime.now(); // comment out for testing
-        LocalTime now = LocalTime.parse("7:50AM",
-            DateTimeFormatter.ofPattern("h:mma"));
+        Log.i("Debin", " last block endtime= " + endTimeLt.toString());
+
+        LocalTime now = LocalTime.now(); // comment out for testing
+        Log.i("Debin", "now: " + now.toString());
+
         int compVal = now.compareTo(endTimeLt);
 
         if (compVal > 0) {
@@ -227,60 +283,70 @@ public class TodayFragment extends Fragment {
             mViewInfo.message = "School is over for today";
             mViewInfo.isSchoolOn = false;
         } else {
-            long diffInMinutes = now.until(endTimeLt, MINUTES);
-            mViewInfo.message = diffInMinutes + " minutes before school end.";
             mViewInfo.isSchoolOn = true;
-            Log.i("Debin", " minutes before school end: " + diffInMinutes);
         }
 
         if (mViewInfo.isSchoolOn) {
             boolean firstBlockFound = false;
             int index = 0;
             for (BlocksInWeek.BlockItem block : mViewInfo.dayBlocks) {
+                LocalTime classStartTime = LocalTime.parse(block.start_time,
+                        DateTimeFormatter.ofPattern("h:mma"));
                 LocalTime classEndTime = LocalTime.parse(block.end_time,
                         DateTimeFormatter.ofPattern("h:mma"));
-                Log.i("Debin", "class end time: " + classEndTime.toString());
+
+                Log.i("Debin", "index=" + index + " start: " + classStartTime.toString() + " end: " + classEndTime.toString());
 
                 if ( !firstBlockFound && now.compareTo(classEndTime) < 0 ) {
                     firstBlockFound = true;
-                    Log.i("Debin", "firstBlockFund: position: " + index +
-                            " classEndTime: " + classEndTime.toString());
-                    long diffInMinutes = now.until(classEndTime, MINUTES);
-                    mViewInfo.remainingMinutes = (int) diffInMinutes;
+                    Log.i("Debin", "firstBlockFound: position: " + index);
 
-                    if (index == 0) {
-                        // check if it is before school start
-                        LocalTime schoolBeginTime = LocalTime.parse(block.start_time,
-                                DateTimeFormatter.ofPattern("h:mma"));
-                        if (now.compareTo(schoolBeginTime) < 0) {
+                    // check if it is before class or school start
+                    long diffInMinutes;
+                    if (now.compareTo(classStartTime)<0) {
+                        diffInMinutes = now.until(classStartTime, MILLIS);
+                        if (index == 0) {
+                            Log.i("Debin", "It is before school start. diffInMinutes: " + diffInMinutes);
                             mViewInfo.beforeSchoolStart = true;
-                            diffInMinutes = now.until(schoolBeginTime, MINUTES);
-                            Log.i("Debin", "before school start: " + diffInMinutes);
-                            mViewInfo.remainingMinutes = (int)diffInMinutes;
+                        } else {
+                            Log.i("Debin", "It is before class start. diffInMinutes: " + diffInMinutes);
+                            mViewInfo.beforeClassStart = true;
                         }
+                        mViewInfo.remainingTimeMils = diffInMinutes;
+                    } else {
+                        diffInMinutes = now.until(classEndTime, MILLIS);
+                        Log.i("Debin", "It is before class end. DiffInMinutes: " + diffInMinutes);
+                        mViewInfo.remainingTimeMils = diffInMinutes;
                     }
                 }
 
                 if (firstBlockFound) {
+                    Log.i("Debin", "block: " + index + " is added");
                     mViewInfo.remainingDayBlocks.add(block);
+                } else {
+                    Log.i("Debin", "block: " + index + " is skipped");
                 }
                 index++;
             }
         }
     }
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = null;
         mViewInfo = new ViewInfo();
+
         checkSchoolDay();
 
         if (!mViewInfo.isSchoolOn) {
+            Log.i("Debin", "school is not on");
             view = inflater.inflate(R.layout.fragment_no_class, container, false);
             TextView noClassTv = view.findViewById(R.id.noClassTv);
             noClassTv.setText(mViewInfo.message);
         } else {
+            Log.i("Debin", "school is on");
             view = inflater.inflate(R.layout.fragment_school_day, container, false);
             mListView = view.findViewById(R.id.school_day_list_view);
 
@@ -290,5 +356,16 @@ public class TodayFragment extends Fragment {
         }
 
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        Log.i("Debin", "onDestroy() is called");
+        if (mTodayBlockListAdaptor.mCountDownTimer != null) {
+            Log.i("Debin", "Timer is destroyed!");
+            mTodayBlockListAdaptor.mCountDownTimer.cancel();
+        }
     }
 }
