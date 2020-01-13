@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,17 +44,20 @@ public class FutureDayActivity extends AppCompatActivity {
             TextView timeTv = view.findViewById(R.id.timeTv);
             TextView blockNameTv = view.findViewById(R.id.blockNameTv);
             TextView roomTv = view.findViewById(R.id.roomTv);
+            ImageView imageView = view.findViewById(R.id.blockImage);
             BlocksInWeek.BlockItem block = mSelectDayBlocks.get(position);
             String blockName = block.name;
             BlocksInWeek.Block_Type type = block.type;
             String className = "No Class";
             int color = 0;
             String location = "N/A";
-            boolean first_lunch = !configureLunchBlockActivity.mLunchBlocks[mDayOfWeek-2];
+            boolean first_lunch = !configureLunchBlockActivity.mLunchBlocks[mDayOfWeek - 2];
             boolean isLunchBlock = false;
+            
+            imageView.setImageResource(block.blockImage);
 
             // find block's corresponding class
-            //  static public ArrayList<ClassItem> mClasses = new ArrayList<>();
+            // static public ArrayList<ClassItem> mClasses = new ArrayList<>();
             boolean classFound = false;
             for (SetClassActivity.ClassItem classItem : SetClassActivity.mClasses) {
               if (classItem.block.equals(blockName)) {

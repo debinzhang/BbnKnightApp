@@ -363,9 +363,11 @@ public class TodayFragment extends Fragment {
         super.onDestroy();
 
         Log.i("Debin", "onDestroy() is called");
-        if (mTodayBlockListAdaptor.mCountDownTimer != null) {
-            Log.i("Debin", "Timer is destroyed!");
-            mTodayBlockListAdaptor.mCountDownTimer.cancel();
+        if (mTodayBlockListAdaptor != null) {
+            if (mTodayBlockListAdaptor.mCountDownTimer != null) {
+                Log.i("Debin", "Timer is destroyed!");
+                mTodayBlockListAdaptor.mCountDownTimer.cancel();
+            }
         }
     }
 }
