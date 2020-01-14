@@ -20,6 +20,9 @@ import java.util.ArrayList;
 public class FutureDayActivity extends AppCompatActivity {
     static private ArrayList<BlocksInWeek.BlockItem> mSelectDayBlocks;
     static private int mDay, mMonth, mYear, mDayOfWeek;
+    private static final String[] month_str= {"January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"};
+    private static final String[] weekday_str = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
 
     ListView mListView;
     static public BlockListAdaptor mBlockListAdaptor;
@@ -119,8 +122,15 @@ public class FutureDayActivity extends AppCompatActivity {
         mYear = getIntent().getIntExtra("year", -1);
         mDayOfWeek = getIntent().getIntExtra("dayOfWeek", -1);
         mListView = findViewById(R.id.blockListview);
-        
+        TextView dateOfWeekTv = findViewById(R.id.dateOfWeek);
+        TextView dayTv = findViewById(R.id.day);
+        TextView monthYearTv = findViewById(R.id.monthYear);
+
         Log.i("Debin", "Receiving date: " + (mMonth+1) + "/" + mDay + "/" + mYear);
+
+        dateOfWeekTv.setText(weekday_str[mDayOfWeek-2]);
+        dayTv.setText(Integer.toString(mDay));
+        monthYearTv.setText(month_str[mMonth] + ",  " + Integer.toString(mYear));
 
         if (mDayOfWeek != -1 && mDayOfWeek >= 2 && mDayOfWeek <= 6) {
             // dayofWeek: Sun:1, Mon:2, Tue:3, W:4, Th:5, F:6, Sat:7
