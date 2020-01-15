@@ -140,7 +140,7 @@ public class BlocksInWeek {
                 "11:15AM", "11:40AM");
         dayBlock.add(blockItem);
         blockItem = new BlockItem(A_BLOCK, Block_Type.LUNCH, "12:10PM", "12:35PM",
-                "11:45AM", "12:35AM");
+                "11:45AM", "12:35PM");
         dayBlock.add(blockItem);
         blockItem = new BlockItem(X_BLOCK, Block_Type.REGULAR, "12:40PM", "1:25PM");
         dayBlock.add(blockItem);
@@ -165,10 +165,10 @@ public class BlocksInWeek {
         blockItem = new BlockItem(B_BLOCK, Block_Type.WITH_LUNCH, "11:15AM", "12:05PM",
                 "11:15AM", "11:40AM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(B_BLOCK, Block_Type.LUNCH, "12:10AM", "12:35AM",
-                "11:45AM", "12:35AM");
+        blockItem = new BlockItem(B_BLOCK, Block_Type.LUNCH, "12:10PM", "12:35PM",
+                "11:45AM", "12:35PM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(X_BLOCK, Block_Type.REGULAR, "12:40AM", "1:20PM");
+        blockItem = new BlockItem(X_BLOCK, Block_Type.REGULAR, "12:40PM", "1:20PM");
         dayBlock.add(blockItem);
         blockItem = new BlockItem(F_BLOCK, Block_Type.WITH_LAB_CONF, "1:25PM", "2:15PM");
         dayBlock.add(blockItem);
@@ -194,10 +194,10 @@ public class BlocksInWeek {
         blockItem = new BlockItem(F_BLOCK, Block_Type.WITH_LUNCH, "11:15AM", "12:05PM",
                 "11:15AM", "11:40AM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(F_BLOCK, Block_Type.LUNCH, "12:10AM", "12:35AM",
-                "11:45AM", "12:35AM");
+        blockItem = new BlockItem(F_BLOCK, Block_Type.LUNCH, "12:10PM", "12:35PM",
+                "11:45AM", "12:35PM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(ACTIVITIES_BLOCK, Block_Type.ACTIVITIES, "12:40AM", "1:25PM");
+        blockItem = new BlockItem(ACTIVITIES_BLOCK, Block_Type.ACTIVITIES, "12:40PM", "1:25PM");
         dayBlock.add(blockItem);
         weekBlock.add(dayBlock);
 
@@ -216,10 +216,10 @@ public class BlocksInWeek {
         blockItem = new BlockItem(G_BLOCK, Block_Type.WITH_LUNCH, "11:10AM", "12:00PM",
                 "11:10AM", "11:35AM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(G_BLOCK, Block_Type.LUNCH, "12:05AM", "12:30AM",
-                "11:40AM", "12:30AM");
+        blockItem = new BlockItem(G_BLOCK, Block_Type.LUNCH, "12:05PM", "12:30PM",
+                "11:40AM", "12:30PM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(E_BLOCK, Block_Type.REGULAR, "12:35AM", "1:20PM");
+        blockItem = new BlockItem(E_BLOCK, Block_Type.REGULAR, "12:35PM", "1:20PM");
         dayBlock.add(blockItem);
         blockItem = new BlockItem(D_BLOCK, Block_Type.WITH_LAB_CONF, "1:25PM", "2:15PM");
         dayBlock.add(blockItem);
@@ -246,7 +246,7 @@ public class BlocksInWeek {
                 "11:15AM", "11:40AM");
         dayBlock.add(blockItem);
         blockItem = new BlockItem(D_BLOCK, Block_Type.LUNCH, "12:10PM", "12:35PM",
-                "11:45AM", "12:35AM");
+                "11:45AM", "12:35PM");
         dayBlock.add(blockItem);
         blockItem = new BlockItem(A_BLOCK, Block_Type.REGULAR, "12:40PM", "1:25PM");
         dayBlock.add(blockItem);
