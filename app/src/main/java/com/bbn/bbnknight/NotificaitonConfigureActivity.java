@@ -30,6 +30,7 @@ public class NotificaitonConfigureActivity extends AppCompatActivity{
         notification = new BlockNotofication();
         beforeBlockNotification = findViewById(R.id.BeforeBlockNotificationSwitch);
         beforeBlockEndNotification = findViewById(R.id.BeforeBlockEndNOtificationSwitch);
+        //     beforeBlockEndNotification.setChecked(true);
         beforeBlockEndNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

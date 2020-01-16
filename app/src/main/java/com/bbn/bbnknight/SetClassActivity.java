@@ -23,7 +23,6 @@ public class SetClassActivity extends AppCompatActivity {
         String name;
         String block;
         String location;
-        String days;
         int color;
     };
 

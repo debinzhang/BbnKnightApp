@@ -32,6 +32,7 @@ import java.util.Locale;
 import static java.time.temporal.ChronoUnit.MILLIS;
 
 public class TodayFragment extends Fragment {
+    private static final long FIVE_MIN_IN_MILLS = 5 * 60 * 1000;
     class ViewInfo {
         boolean isSchoolOn;
         String message;
@@ -40,6 +41,8 @@ public class TodayFragment extends Fragment {
         long remainingTimeMils;
         boolean beforeSchoolStart;
         boolean beforeClassStart;
+        boolean beforeBlkNotification;  // notification for the 1st block
+        boolean beforeBlkEndNotification; // notification for the 1st block
         ArrayList<BlocksInWeek.BlockItem> dayBlocks;
         ArrayList<BlocksInWeek.BlockItem> remainingDayBlocks;
 
@@ -54,7 +57,13 @@ public class TodayFragment extends Fragment {
             remainingDayBlocks = null;
             remainingTimeMils = 0;
             beforeSchoolStart = false;
-            beforeClassStart = false;
+            //beforeClassStart = false;
+            beforeClassStart = true; // for testing only
+            //beforeBlkNotification = false;
+            beforeBlkNotification = true;
+            //beforeBlkNotification = false;
+            beforeBlkEndNotification = true; // for testing only
+            //beforeBlkEndNotification = false; // for testing only
             remainingDayBlocks = new ArrayList<BlocksInWeek.BlockItem>();
         }
     }
@@ -192,6 +201,25 @@ public class TodayFragment extends Fragment {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     mTimerLeftInMillis = millisUntilFinished;
+
+                    if (mViewInfo.beforeBlkNotification) {
+                        Log.i("Debin", "before class notification: millToFinish: " + millisUntilFinished);
+                        if (millisUntilFinished <= FIVE_MIN_IN_MILLS) {
+                            mViewInfo.beforeBlkNotification = false;
+                            Log.i("Debin", "5 minutes hit!");
+                            if (mViewInfo.beforeSchoolStart || mViewInfo.beforeClassStart) {
+                                Log.i("Debin", "5 minutes toast");
+                                Toast.makeText(getContext(), "5 minutes before class start", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+
+                    if (mViewInfo.beforeBlkEndNotification) {
+                        if (millisUntilFinished == FIVE_MIN_IN_MILLS) {
+                            Toast.makeText(getContext(), "5 minutes before class end", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
                     updateCountDownText();
                 }
 
@@ -237,7 +265,7 @@ public class TodayFragment extends Fragment {
         LocalDate date = LocalDate.now();
         DayOfWeek day = DayOfWeek.of(date.get(ChronoField.DAY_OF_WEEK));
 
-        //day = DayOfWeek.TUESDAY; // for testing only
+        day = DayOfWeek.TUESDAY; // for testing only
         mViewInfo.dayOfWeek = day;
 
         switch (day) {
@@ -274,6 +302,7 @@ public class TodayFragment extends Fragment {
         Log.i("Debin", " last block endtime= " + endTimeLt.toString());
 
         LocalTime now = LocalTime.now(); // comment out for testing
+        now = LocalTime.of(7, 54, 40);
         Log.i("Debin", "now: " + now.toString());
 
         int compVal = now.compareTo(endTimeLt);
@@ -301,9 +330,12 @@ public class TodayFragment extends Fragment {
                     firstBlockFound = true;
                     Log.i("Debin", "firstBlockFound: position: " + index);
 
+                    // get first block notification info
+                    getNotificationInfo(block);
+
                     // check if it is before class or school start
                     long diffInMinutes;
-                    if (now.compareTo(classStartTime)<0) {
+                    if (now.compareTo(classStartTime) < 0) {
                         diffInMinutes = now.until(classStartTime, MILLIS);
                         if (index == 0) {
                             Log.i("Debin", "It is before school start. diffInMinutes: " + diffInMinutes);
@@ -330,6 +362,18 @@ public class TodayFragment extends Fragment {
             }
         }
     }
+
+    private void getNotificationInfo(BlocksInWeek.BlockItem block) {
+        // TO-BE-REPLACED BY REAL NOTIFICATION CODE
+        if (block.name.equals(BlocksInWeek.A_BLOCK)) {
+            mViewInfo.beforeBlkNotification = true;
+            mViewInfo.beforeBlkEndNotification = true;
+        } else if (block.name.equals(BlocksInWeek.ASSEMBLY_BLOCK)) {
+            mViewInfo.beforeBlkNotification = true;
+            mViewInfo.beforeBlkEndNotification = false;
+        }
+    }
+
 
 
     @Nullable

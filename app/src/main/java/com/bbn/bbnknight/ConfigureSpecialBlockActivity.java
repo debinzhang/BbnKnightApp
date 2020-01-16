@@ -33,7 +33,13 @@ public class ConfigureSpecialBlockActivity extends AppCompatActivity implements 
         Assembly.setOnClickListener(this);
         Lunch.setOnClickListener(this);
 
+        Log.i("Debin", "special_block onCreate");
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("Debin", "special_block: onResume");
     }
 
     public void onClick(View view) {

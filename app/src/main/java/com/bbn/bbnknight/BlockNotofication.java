@@ -3,11 +3,10 @@ package com.bbn.bbnknight;
 public class BlockNotofication {
 
     private int[] blockNotification = new int[6];
-
+    //0 for both no notification
     //1 for before block notification and no before block end notification
     //2 for before block end notification and no before block notification
     //3 for both before block and before block end notificaiton
-    //4 for both no notification
     public BlockNotofication() {
         for(int i = 0; i < 6; i++) {
             blockNotification[i]=0;

@@ -24,11 +24,10 @@ import java.util.HashSet;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class addOrDelClassActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    int mColor;
+    int mColor = R.color.design_default_color_primary_dark;
     EditText mClassNameEditText;
     EditText mLocationEditText;
     Spinner mBlockspinner;
-    EditText mDaysEditText;
     Button mPickColorButton, mSaveButton, mDelButton, mCancelButton;
     int classIndex = -1;
     boolean addNewClass = false;
@@ -70,23 +69,18 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
         }
 
         String location = mLocationEditText.getText().toString();
-        if (location.isEmpty()) {
-            Toast.makeText(this, "Location CANNOT be empty", Toast.LENGTH_LONG).show();
-            return;
-        }
         String block = selectedBlock;
         if (block.isEmpty()) {
             Toast.makeText(this, "Block CANNOT be empty", Toast.LENGTH_LONG).show();
             return;
         }
-        String days = mDaysEditText.getText().toString();
 
         SetClassActivity.ClassItem classItem = new SetClassActivity.ClassItem();
         classItem.name = className;
         classItem.location = location;
         classItem.block = block;
+        Log.i("Debin", "SaveButtonClicked: mcolor: " + Integer.toString(mColor));
         classItem.color = mColor;
-        classItem.days = days;
         if (addNewClass) {
             SetClassActivity.mClasses.add(classItem);
         } else {
@@ -143,7 +137,7 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_del_class);
         String action;
-        String className, location, block, days;
+        String className, location, block;
 
         mClassNameEditText = findViewById(R.id.classNameEditText);
 
@@ -154,7 +148,6 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
         mBlockspinner.setOnItemSelectedListener(this);
 
         mLocationEditText = findViewById(R.id.locationEditText);
-        mDaysEditText = findViewById(R.id.daysEditText);
         mPickColorButton = findViewById(R.id.pickColorButton);
         mSaveButton = findViewById(R.id.newClassSaveButton);
         mDelButton = findViewById(R.id.editClassDelButton);
@@ -178,7 +171,7 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
         }
 
         if (addNewClass) {
-            mColor = 0xAAAAAA; // default color, defined in xml
+            mColor = 0xFF000000; // default text color to black
         } else {
             // this is the edit class case
             SetClassActivity.ClassItem classItem = SetClassActivity.mClasses.get(classIndex);
@@ -187,13 +180,11 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
             className = classItem.name;
             location = classItem.location;
             block = classItem.block;
-            days = classItem.days;
 
             mClassNameEditText.setText(className);
             mClassNameEditText.setTextColor(mColor);
             mBlockspinner.setTooltipText(block);
             mLocationEditText.setText(location);
-            mDaysEditText.setText(days);
             mPickColorButton.setBackgroundColor(mColor);
         }
     }
