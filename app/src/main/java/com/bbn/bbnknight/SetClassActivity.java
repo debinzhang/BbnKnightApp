@@ -53,6 +53,7 @@ public class SetClassActivity extends AppCompatActivity {
                 Intent intent = new Intent(SetClassActivity.this, addOrDelClassActivity.class);
                 intent.putExtra("action", "edit");
                 intent.putExtra("classId", i);
+                intent.putExtra("blockIndex", getBlockIndex(i));
                 startActivity(intent);
             }
         });
@@ -81,6 +82,49 @@ public class SetClassActivity extends AppCompatActivity {
             classBlockTextView.setText(mClasses.get(position).block);
 
             return view;
+        }
+    }
+
+    private int getBlockIndex(int classId) {
+        String blockName = mClasses.get(classId).block;
+
+        // the following is the spinner pulldown box items, defined in strings.xml
+//        <string-array name="classBlocks">
+//        <item>A Block</item>
+//        <item>B Block</item>
+//        <item>C Block</item>
+//        <item>D Block</item>
+//        <item>E Block</item>
+//        <item>F Block</item>
+//        <item>G Block</item>
+//        <item>X Block</item>
+//        <item>Activities</item>
+//        <item>Lunch</item>
+//        </string-array>
+
+        switch (blockName) {
+            case "A Block":
+                return 0;
+            case "B Block":
+                return 1;
+            case "C Block":
+                return 2;
+            case "D Block":
+                return 3;
+            case "E Block":
+                return 4;
+            case "F Block":
+                return 5;
+            case "G Block":
+                return 6;
+            case "X Block":
+                return 7;
+            case "Activities":
+                return 8;
+            case "Lunch":
+                return 9;
+            default:
+                return 0;
         }
     }
 

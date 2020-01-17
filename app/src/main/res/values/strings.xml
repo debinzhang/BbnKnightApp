@@ -3,7 +3,6 @@
     <string name="open"> Open </string>
     <string name="close"> Close </string>
     <string-array name="classBlocks">
-        <item> </item>
         <item>A Block</item>
         <item>B Block</item>
         <item>C Block</item>

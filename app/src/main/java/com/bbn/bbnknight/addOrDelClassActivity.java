@@ -19,8 +19,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import java.util.HashSet;
-
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class addOrDelClassActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -30,6 +28,7 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
     Spinner mBlockspinner;
     Button mPickColorButton, mSaveButton, mDelButton, mCancelButton;
     int classIndex = -1;
+    int blockIndex = 0;
     boolean addNewClass = false;
     String selectedBlock;
 
@@ -137,7 +136,7 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_del_class);
         String action;
-        String className, location, block;
+        String className, location;
 
         mClassNameEditText = findViewById(R.id.classNameEditText);
 
@@ -156,6 +155,7 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
         Intent intent = getIntent();
         action = intent.getStringExtra("action");
         classIndex = intent.getIntExtra("classId", -1);
+        blockIndex = intent.getIntExtra("blockIndex", 0);
         if (action.equals("add")) {
             addNewClass = true;
         } else {
@@ -179,11 +179,10 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
             mColor = classItem.color;
             className = classItem.name;
             location = classItem.location;
-            block = classItem.block;
 
             mClassNameEditText.setText(className);
             mClassNameEditText.setTextColor(mColor);
-            mBlockspinner.setTooltipText(block);
+            mBlockspinner.setSelection(blockIndex);
             mLocationEditText.setText(location);
             mPickColorButton.setBackgroundColor(mColor);
         }
