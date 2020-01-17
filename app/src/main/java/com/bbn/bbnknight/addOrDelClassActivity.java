@@ -22,6 +22,8 @@ import com.google.gson.Gson;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
+import static com.bbn.bbnknight.NotificaitonConfigureActivity.PRE_NOTIFICATION_KEY;
+
 public class addOrDelClassActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     int mColor = R.color.design_default_color_primary_dark;
     EditText mClassNameEditText;
@@ -51,13 +53,26 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
         colorPicker.show();
     }
 
-    public void saveClassInfo() {
+    private void saveClassInfo() {
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(
                 "com.bbn.bbnknight", Context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(SetClassActivity.mClasses);
         prefsEditor.putString("classes", json);
+        prefsEditor.commit();
+    }
+
+    private void saveBlockNotificcationInfo()
+    {
+        Log.i("Debin", "save notification to pref");
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(
+                "com.bbn.bbnknight", Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+        Gson gson = new Gson();
+
+        String json = gson.toJson(BlockNotification.getInstance());
+        prefsEditor.putString(PRE_NOTIFICATION_KEY, json);
         prefsEditor.commit();
     }
 
@@ -79,7 +94,6 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
         classItem.name = className;
         classItem.location = location;
         classItem.block = block;
-        Log.i("Debin", "SaveButtonClicked: mcolor: " + Integer.toString(mColor));
         classItem.color = mColor;
         if (addNewClass) {
             SetClassActivity.mClasses.add(classItem);
@@ -92,11 +106,9 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
         saveClassInfo();
 
         BlockNotification blockNotification = BlockNotification.getInstance();
-
         blockNotification.setBeforeStartNotificationSet(block, mBeforeStartNotificationSwitch.isChecked());
         blockNotification.setBeforeEndNotificationSet(block, mBeforeEndNotificationSwitch.isChecked());
-        Log.i("Debin", "start_nofi: " + Boolean.toString(mBeforeStartNotificationSwitch.isChecked()));
-        Log.i("Debin", "end_nofi: " + Boolean.toString(mBeforeEndNotificationSwitch.isChecked()));
+        saveBlockNotificcationInfo();
 
         finish();
     }
