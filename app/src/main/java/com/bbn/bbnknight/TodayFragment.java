@@ -265,7 +265,7 @@ public class TodayFragment extends Fragment {
         LocalDate date = LocalDate.now();
         DayOfWeek day = DayOfWeek.of(date.get(ChronoField.DAY_OF_WEEK));
 
-        day = DayOfWeek.TUESDAY; // for testing only
+        //day = DayOfWeek.TUESDAY; // for testing only
         mViewInfo.dayOfWeek = day;
 
         switch (day) {
