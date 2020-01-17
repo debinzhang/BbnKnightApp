@@ -302,7 +302,7 @@ public class TodayFragment extends Fragment {
         Log.i("Debin", " last block endtime= " + endTimeLt.toString());
 
         LocalTime now = LocalTime.now(); // comment out for testing
-        now = LocalTime.of(7, 54, 40);
+        //now = LocalTime.of(7, 54, 40);
         Log.i("Debin", "now: " + now.toString());
 
         int compVal = now.compareTo(endTimeLt);

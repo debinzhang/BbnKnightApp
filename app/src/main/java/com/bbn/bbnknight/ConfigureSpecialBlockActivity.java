@@ -36,46 +36,32 @@ public class ConfigureSpecialBlockActivity extends AppCompatActivity implements 
         Log.i("Debin", "special_block onCreate");
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i("Debin", "special_block: onResume");
-    }
-
     public void onClick(View view) {
+        Intent intent = new Intent(ConfigureSpecialBlockActivity.this,NotificaitonConfigureActivity.class);
         switch ((view.getId())) {
             case R.id.XBlockBlock:
-                Intent intent = new Intent(ConfigureSpecialBlockActivity.this,NotificaitonConfigureActivity.class);
-                intent.putExtra("Block Name", 0);
-                startActivity(intent);
+                intent.putExtra("Block Name", BlocksInWeek.X_BLOCK);
                 break;
             case R.id.ActivitiesBlock:
-                Intent intent1 = new Intent(ConfigureSpecialBlockActivity.this,NotificaitonConfigureActivity.class);
-                intent1.putExtra("Block Name", 2);
-                startActivity(intent1);
+                intent.putExtra("Block Name", BlocksInWeek.ACTIVITIES_BLOCK);
                 break;
             case R.id.AdvisoryBlock:
-                Intent intent2 = new Intent(ConfigureSpecialBlockActivity.this,NotificaitonConfigureActivity.class);
-                intent2.putExtra("Block Name", 3);
-                startActivity(intent2);
+                intent.putExtra("Block Name", BlocksInWeek.ADVISORY_BLOCK);
                 break;
             case R.id.ClassMeetingBlock:
-                Intent intent3 = new Intent(ConfigureSpecialBlockActivity.this,NotificaitonConfigureActivity.class);
-                intent3.putExtra("Block Name", 4);
-                startActivity(intent3);
+                intent.putExtra("Block Name", BlocksInWeek.CLASS_MEETING_BLOCK);
                 break;
             case R.id.LunchBlock:
-                Intent intent4 = new Intent(ConfigureSpecialBlockActivity.this,NotificaitonConfigureActivity.class);
-                intent4.putExtra("Block Name", 1);
-                startActivity(intent4);
+                intent.putExtra("Block Name", BlocksInWeek.LUNCH_BLOCK);
                 break;
             case R.id.AssemblyBlock:
-                Intent intent5 = new Intent(ConfigureSpecialBlockActivity.this,NotificaitonConfigureActivity.class);
-                intent5.putExtra("Block Name", 5);
-                startActivity(intent5);
+                intent.putExtra("Block Name", BlocksInWeek.ASSEMBLY_BLOCK);
                 break;
+                default:
+                    // invalid block selected
+                    Log.i("Debin", "Invalid block selected");
+                    return;
         }
-
+        startActivity(intent);
     }
-
 }

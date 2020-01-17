@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 
 
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+    private BlockNotification mBlockNotification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +47,31 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // retrieve class information
+        // retrieve class information from pref
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(
                 "com.bbn.bbnknight", Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString("classes", "");
-
         if (!json.isEmpty()) {
             Type type = new TypeToken<ArrayList<SetClassActivity.ClassItem>>(){}.getType();
             SetClassActivity.mClasses = gson.fromJson(json, type);
         }
 
+        // retrieve block notification info from pref
+        BlockNotification notificationPref = null;
+        String notification_json = sharedPreferences.getString(
+                NotificaitonConfigureActivity.PRE_NOTIFICATION_KEY, "");
+        if (!notification_json.isEmpty()) {
+            Log.i("Debin", "get notification from preference");
+            Type type = new TypeToken<BlockNotification>(){}.getType();
+            notificationPref= gson.fromJson(notification_json, type);
+            BlockNotification.setInstance(notificationPref);
+        } else {
+            Log.i("Debin", "failed to get notification from preference");
+        }
+
+        // retrieve lunch setting from pref
         for (int i=0; i<configureLunchBlockActivity.mLunchBlocks.length; i++) {
-            Log.i("Evan", "xxx i=" + i);
             //configureLunchBlockActivity.mLunchBlocks[i] =
             String str = sharedPreferences.getString("lunch_"+i, "");
             if (str.equals("false")) {

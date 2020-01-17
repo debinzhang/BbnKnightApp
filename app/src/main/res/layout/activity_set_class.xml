@@ -17,6 +17,7 @@
         android:background="#F2E6E6E6"
         android:text="Classes"
         android:textSize="24sp"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

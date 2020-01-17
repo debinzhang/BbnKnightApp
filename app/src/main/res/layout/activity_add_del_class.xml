@@ -15,6 +15,7 @@
         android:background="#EBEBEB"
         android:text="Add class"
         android:textSize="24sp"
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
