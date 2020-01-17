@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -27,6 +28,7 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
     EditText mLocationEditText;
     Spinner mBlockspinner;
     Button mPickColorButton, mSaveButton, mDelButton, mCancelButton;
+    Switch mBeforeStartNotificationSwitch, mBeforeEndNotificationSwitch;
     int classIndex = -1;
     int blockIndex = 0;
     boolean addNewClass = false;
@@ -66,7 +68,6 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
             Toast.makeText(this, "class name CANNOT be empty", Toast.LENGTH_LONG).show();
             return;
         }
-
         String location = mLocationEditText.getText().toString();
         String block = selectedBlock;
         if (block.isEmpty()) {
@@ -89,6 +90,13 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
         SetClassActivity.mClassListAdaptor.notifyDataSetChanged();
 
         saveClassInfo();
+
+        BlockNotification blockNotification = BlockNotification.getInstance();
+
+        blockNotification.setBeforeStartNotificationSet(block, mBeforeStartNotificationSwitch.isChecked());
+        blockNotification.setBeforeEndNotificationSet(block, mBeforeEndNotificationSwitch.isChecked());
+        Log.i("Debin", "start_nofi: " + Boolean.toString(mBeforeStartNotificationSwitch.isChecked()));
+        Log.i("Debin", "end_nofi: " + Boolean.toString(mBeforeEndNotificationSwitch.isChecked()));
 
         finish();
     }
@@ -141,7 +149,9 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
         mClassNameEditText = findViewById(R.id.classNameEditText);
 
         mBlockspinner = findViewById(R.id.blockspinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.classBlocks, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter =
+                ArrayAdapter.createFromResource(this, R.array.classBlocks,
+                        android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mBlockspinner.setAdapter(adapter);
         mBlockspinner.setOnItemSelectedListener(this);
@@ -151,11 +161,15 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
         mSaveButton = findViewById(R.id.newClassSaveButton);
         mDelButton = findViewById(R.id.editClassDelButton);
         mCancelButton = findViewById(R.id.editClassCancelButton);
+        mBeforeStartNotificationSwitch = findViewById(R.id.b4_start_switch);
+        mBeforeEndNotificationSwitch = findViewById(R.id.b4_end_switch);
 
         Intent intent = getIntent();
         action = intent.getStringExtra("action");
         classIndex = intent.getIntExtra("classId", -1);
         blockIndex = intent.getIntExtra("blockIndex", 0);
+        selectedBlock = intent.getStringExtra("blockName");
+
         if (action.equals("add")) {
             addNewClass = true;
         } else {
@@ -185,6 +199,12 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
             mBlockspinner.setSelection(blockIndex);
             mLocationEditText.setText(location);
             mPickColorButton.setBackgroundColor(mColor);
+
+            BlockNotification blockNotification = BlockNotification.getInstance();
+            mBeforeStartNotificationSwitch.setChecked(blockNotification.isBeforeStartNotificationSet(
+                    selectedBlock));
+            mBeforeEndNotificationSwitch.setChecked(blockNotification.isBeforeEndNotificationSet(
+                    selectedBlock));
         }
     }
 

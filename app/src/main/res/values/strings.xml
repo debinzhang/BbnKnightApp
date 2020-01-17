@@ -10,9 +10,6 @@
         <item>E Block</item>
         <item>F Block</item>
         <item>G Block</item>
-        <item>X Block</item>
-        <item>Activities</item>
-        <item>Lunch</item>
     </string-array>
     <string-array name="lunchTime">
         <item>1st Lunch</item>

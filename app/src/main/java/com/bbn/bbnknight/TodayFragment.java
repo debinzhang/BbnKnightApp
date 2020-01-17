@@ -203,7 +203,7 @@ public class TodayFragment extends Fragment {
                     mTimerLeftInMillis = millisUntilFinished;
 
                     if (mViewInfo.beforeBlkNotification) {
-                        Log.i("Debin", "before class notification: millToFinish: " + millisUntilFinished);
+                        //Log.i("Debin", "before class notification: millToFinish: " + millisUntilFinished);
                         if (millisUntilFinished <= FIVE_MIN_IN_MILLS) {
                             mViewInfo.beforeBlkNotification = false;
                             Log.i("Debin", "5 minutes hit!");

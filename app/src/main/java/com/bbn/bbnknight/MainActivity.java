@@ -65,7 +65,11 @@ public class MainActivity extends AppCompatActivity
             Log.i("Debin", "get notification from preference");
             Type type = new TypeToken<BlockNotification>(){}.getType();
             notificationPref= gson.fromJson(notification_json, type);
-            BlockNotification.setInstance(notificationPref);
+
+            if (notificationPref.mBlockNotifications != null &&
+                    notificationPref.mBlockNotifications.length == BlockNotification.total_blocks) {
+                BlockNotification.setInstance(notificationPref);
+            }
         } else {
             Log.i("Debin", "failed to get notification from preference");
         }

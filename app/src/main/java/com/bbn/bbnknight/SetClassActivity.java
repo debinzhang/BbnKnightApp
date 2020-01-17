@@ -54,6 +54,7 @@ public class SetClassActivity extends AppCompatActivity {
                 intent.putExtra("action", "edit");
                 intent.putExtra("classId", i);
                 intent.putExtra("blockIndex", getBlockIndex(i));
+                intent.putExtra("blockName", mClasses.get(i).block);
                 startActivity(intent);
             }
         });
