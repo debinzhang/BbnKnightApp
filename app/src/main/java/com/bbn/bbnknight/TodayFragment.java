@@ -348,6 +348,8 @@ public class TodayFragment extends Fragment {
                     } else {
                         diffInMinutes = now.until(classEndTime, MILLIS);
                         Log.i("Debin", "It is before class end. DiffInMinutes: " + diffInMinutes);
+                        mViewInfo.beforeSchoolStart = false;
+                        mViewInfo.beforeClassStart = false;
                         mViewInfo.remainingTimeMils = diffInMinutes;
                     }
                 }
@@ -364,14 +366,14 @@ public class TodayFragment extends Fragment {
     }
 
     private void getNotificationInfo(BlocksInWeek.BlockItem block) {
-        // TO-BE-REPLACED BY REAL NOTIFICATION CODE
-        if (block.name.equals(BlocksInWeek.A_BLOCK)) {
-            mViewInfo.beforeBlkNotification = true;
-            mViewInfo.beforeBlkEndNotification = true;
-        } else if (block.name.equals(BlocksInWeek.ASSEMBLY_BLOCK)) {
-            mViewInfo.beforeBlkNotification = true;
-            mViewInfo.beforeBlkEndNotification = false;
-        }
+        BlockNotification blockNotification = BlockNotification.getInstance();
+        mViewInfo.beforeBlkNotification =
+                blockNotification.isBeforeStartNotificationSet(block.name);
+        mViewInfo.beforeBlkEndNotification =
+                blockNotification.isBeforeEndNotificationSet(block.name);
+
+        Log.i("Debin", "block: " + block + " b4StartNoti: " + Boolean.toString(mViewInfo.beforeBlkNotification) +
+                "...b4EndNoti: " + Boolean.toString(mViewInfo.beforeBlkEndNotification));
     }
 
 
