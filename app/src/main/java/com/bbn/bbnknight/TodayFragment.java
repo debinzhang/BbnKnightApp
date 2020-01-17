@@ -1,5 +1,6 @@
 package com.bbn.bbnknight;
 
+import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -18,6 +19,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -57,13 +60,9 @@ public class TodayFragment extends Fragment {
             remainingDayBlocks = null;
             remainingTimeMils = 0;
             beforeSchoolStart = false;
-            //beforeClassStart = false;
-            beforeClassStart = true; // for testing only
-            //beforeBlkNotification = false;
-            beforeBlkNotification = true;
-            //beforeBlkNotification = false;
-            beforeBlkEndNotification = true; // for testing only
-            //beforeBlkEndNotification = false; // for testing only
+            beforeClassStart = false;
+            beforeBlkNotification = false;
+            beforeBlkEndNotification = false; // for testing only
             remainingDayBlocks = new ArrayList<BlocksInWeek.BlockItem>();
         }
     }
@@ -203,20 +202,20 @@ public class TodayFragment extends Fragment {
                     mTimerLeftInMillis = millisUntilFinished;
 
                     if (mViewInfo.beforeBlkNotification) {
-                        //Log.i("Debin", "before class notification: millToFinish: " + millisUntilFinished);
                         if (millisUntilFinished <= FIVE_MIN_IN_MILLS) {
                             mViewInfo.beforeBlkNotification = false;
-                            Log.i("Debin", "5 minutes hit!");
                             if (mViewInfo.beforeSchoolStart || mViewInfo.beforeClassStart) {
-                                Log.i("Debin", "5 minutes toast");
-                                Toast.makeText(getContext(), "5 minutes before class start", Toast.LENGTH_LONG).show();
+                                Log.i("Debin", "5 minutes before class notification hit!");
+                                sendOnChannel1();
                             }
                         }
                     }
 
                     if (mViewInfo.beforeBlkEndNotification) {
-                        if (millisUntilFinished == FIVE_MIN_IN_MILLS) {
-                            Toast.makeText(getContext(), "5 minutes before class end", Toast.LENGTH_LONG).show();
+                        if (millisUntilFinished <= FIVE_MIN_IN_MILLS) {
+                            mViewInfo.beforeBlkEndNotification = false;
+                            Log.i("Debin", "5 minutes before class end notification hit");
+                            sendOnChannel2();
                         }
                     }
 
@@ -258,6 +257,7 @@ public class TodayFragment extends Fragment {
     ViewInfo mViewInfo;
     ListView mListView;
     boolean testFlag = false;
+    private NotificationManagerCompat notificationManager;
 
     private TodayBlockListAdaptor mTodayBlockListAdaptor;
 
@@ -376,6 +376,31 @@ public class TodayFragment extends Fragment {
                 "...b4EndNoti: " + Boolean.toString(mViewInfo.beforeBlkEndNotification));
     }
 
+    public void sendOnChannel1() {
+        Log.i("Debin", "channel1 is sent to!");
+        Notification notification = new NotificationCompat.Builder(getContext(), BbnNotificationChannel.CHANNEL_1_ID)
+                .setSmallIcon(R.drawable.ic_access_alarm_black_24dp)
+                .setContentTitle("Class start alarm")
+                .setContentTitle("5 minutes before class starts")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+
+        notificationManager.notify(1, notification);
+    }
+
+    public void sendOnChannel2() {
+        Log.i("Debin", "channel2 is sent to!");
+        Notification notification = new NotificationCompat.Builder(getContext(), BbnNotificationChannel.CHANNEL_2_ID)
+                .setSmallIcon(R.drawable.ic_notifications_none_black_24dp)
+                .setContentTitle("Class end notification")
+                .setContentTitle("class ends in 5 minutes")
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .build();
+
+        notificationManager.notify(2, notification);
+    }
+
 
 
     @Nullable
@@ -400,6 +425,8 @@ public class TodayFragment extends Fragment {
                     android.R.layout.simple_list_item_1, mViewInfo.remainingDayBlocks);
             mListView.setAdapter(mTodayBlockListAdaptor);
         }
+
+        notificationManager = NotificationManagerCompat.from(getContext());
 
         return view;
     }
