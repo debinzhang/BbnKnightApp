@@ -93,6 +93,39 @@ public class BlocksInWeek {
             }
         }
 
+        public int getRegularBlockImage(String blockName) {
+            // The purpose of this method is to get a block's original image, in case it shared
+            // the same time slot with lunch
+            switch (blockName) {
+                case A_BLOCK:
+                    return (R.drawable.letter_a_lg_icon);
+
+                case B_BLOCK:
+                    return (R.drawable.letter_b_pink_icon);
+
+                case C_BLOCK:
+                    return (R.drawable.letter_c_orange_icon);
+
+                case D_BLOCK:
+                    return (R.drawable.letter_d_blue_icon);
+
+                case E_BLOCK:
+                    return (R.drawable.letter_e_blue_icon);
+
+                case F_BLOCK:
+                    return (R.drawable.letter_f_red_icon);
+
+                case G_BLOCK:
+                    return (R.drawable.letter_g_violet_icon);
+
+                case X_BLOCK:
+                    return (R.drawable.letter_x_dg_icon);
+
+            }
+            return 0;
+        }
+
+
         public BlockItem(BlockItem block) {
             this.name = block.name;
             this.type = block.type;

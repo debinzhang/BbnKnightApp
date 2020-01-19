@@ -160,6 +160,10 @@ public class TodayFragment extends Fragment {
             // adjust for lunch block
             if (type == BlocksInWeek.Block_Type.WITH_LUNCH && first_lunch) {
                 timeTv.setText(block.alt_start_time + " -> " + block.alt_end_time);
+                // adjust lunch image
+                if (blockImageView != null) {
+                    blockImageView.setImageResource(R.drawable.breakfast_icon);
+                }
                 isLunchBlock = true;
             }
 
@@ -168,6 +172,10 @@ public class TodayFragment extends Fragment {
                     isLunchBlock = true;
                 } else {
                     timeTv.setText(block.alt_start_time + " -> " + block.alt_end_time);
+                    if (blockImageView != null) {
+                        blockImageView.setImageResource(
+                                block.getRegularBlockImage(block.name));
+                    }
                 }
             }
 
@@ -265,7 +273,7 @@ public class TodayFragment extends Fragment {
         LocalDate date = LocalDate.now();
         DayOfWeek day = DayOfWeek.of(date.get(ChronoField.DAY_OF_WEEK));
 
-        //day = DayOfWeek.TUESDAY; // for testing only
+        day = DayOfWeek.TUESDAY; // for testing only
         mViewInfo.dayOfWeek = day;
 
         switch (day) {
