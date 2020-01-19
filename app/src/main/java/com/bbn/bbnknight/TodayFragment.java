@@ -186,7 +186,7 @@ public class TodayFragment extends Fragment {
                     block.type == BlocksInWeek.Block_Type.ACTIVITIES) {
                 classNameTv.setText(block.name);
                 blockNameTv.setText("");
-            } else if (block.type == BlocksInWeek.Block_Type.LUNCH) {
+            } else if (block.type == BlocksInWeek.Block_Type.LUNCH && isLunchBlock) {
                 classNameTv.setText(BlocksInWeek.LUNCH_BLOCK);
                 blockNameTv.setText("");
             }
