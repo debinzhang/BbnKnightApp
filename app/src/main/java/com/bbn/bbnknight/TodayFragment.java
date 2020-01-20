@@ -87,6 +87,8 @@ public class TodayFragment extends Fragment {
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             View view = null;
+            boolean recaculateLunchSlotTime = false;
+
             if (position == 0) {
                 // today's first block
                 view = getLayoutInflater().inflate(R.layout.block_item_layout_alt, null);
@@ -105,12 +107,12 @@ public class TodayFragment extends Fragment {
                 if (mViewInfo.beforeSchoolStart) {
                     mViewInfo.message = "to school start";
                 } else if (mViewInfo.beforeClassStart) {
-                    mViewInfo.message = "before class start";
+                    mViewInfo.message = "before session start";
                 } else {
-                    mViewInfo.message = "left for class";
+                    mViewInfo.message = "left for session";
                 }
-                startTimer();
             }
+
             BlocksInWeek.BlockItem block = mViewInfo.remainingDayBlocks.get(position);
             String blockNameStr = block.name;
             BlocksInWeek.Block_Type type = block.type;
@@ -159,11 +161,14 @@ public class TodayFragment extends Fragment {
 
             // adjust for lunch block
             if (type == BlocksInWeek.Block_Type.WITH_LUNCH && first_lunch) {
+                // this is lunch block instead of regular block
                 timeTv.setText(block.alt_start_time + " -> " + block.alt_end_time);
+                recaculateLunchSlotTime = true;
                 // adjust lunch image
                 if (blockImageView != null) {
                     blockImageView.setImageResource(R.drawable.breakfast_icon);
                 }
+                // set lunch notification
                 isLunchBlock = true;
             }
 
@@ -171,11 +176,35 @@ public class TodayFragment extends Fragment {
                 if(!first_lunch) {
                     isLunchBlock = true;
                 } else {
+                    // this is regular block instead of lunch block
+                    recaculateLunchSlotTime = true;
                     timeTv.setText(block.alt_start_time + " -> " + block.alt_end_time);
                     if (blockImageView != null) {
                         blockImageView.setImageResource(
                                 block.getRegularBlockImage(block.name));
                     }
+                }
+            }
+
+            // check if need to recalculate lunch slot (including both lunch block and the block
+            // that shared with lunch block
+            if (position == 0 && recaculateLunchSlotTime) {
+                LocalTime now = LocalTime.now();
+                LocalTime classStartTime = LocalTime.parse(block.alt_start_time,
+                        DateTimeFormatter.ofPattern("h:mma"));
+                LocalTime classEndTime = LocalTime.parse(block.alt_end_time,
+                        DateTimeFormatter.ofPattern("h:mma"));
+
+                Log.i("Debin_1", "hit recalculate lunch start time");
+
+                if (now.compareTo(classStartTime) < 0) {
+                    mViewInfo.beforeClassStart = false;
+                    mViewInfo.beforeClassStart = true;
+                    mViewInfo.remainingTimeMils = now.until(classStartTime, MILLIS);
+                } else {
+                    mViewInfo.beforeSchoolStart = false;
+                    mViewInfo.beforeClassStart = false;
+                    mViewInfo.remainingTimeMils =  now.until(classEndTime, MILLIS);
                 }
             }
 
@@ -186,6 +215,15 @@ public class TodayFragment extends Fragment {
                 roomTv.setText("Cafeteria");
                 roomTv.setTextColor(0xFF008888);
                 timeTv.setTextColor(0xFF008888);
+
+                // adjust lunch notification
+                if (position == 0) {
+                    BlockNotification blockNotification = BlockNotification.getInstance();
+                    mViewInfo.beforeBlkNotification = blockNotification.isBeforeStartNotificationSet(
+                            BlocksInWeek.LUNCH_BLOCK);
+                    mViewInfo.beforeBlkEndNotification = blockNotification.isBeforeEndNotificationSet(
+                            BlocksInWeek.LUNCH_BLOCK);
+                }
             }
 
             // if it is advisory or assembly or activities block, just show block name, no class name
@@ -197,6 +235,10 @@ public class TodayFragment extends Fragment {
             } else if (block.type == BlocksInWeek.Block_Type.LUNCH && isLunchBlock) {
                 classNameTv.setText(BlocksInWeek.LUNCH_BLOCK);
                 blockNameTv.setText("");
+            }
+
+            if (position == 0) {
+                startTimer();
             }
 
             return view;
@@ -244,7 +286,8 @@ public class TodayFragment extends Fragment {
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.detach(frg);
                     ft.attach(frg);
-                    ft.commit();
+                    // ft.commit(); this call sometime causes crash. Replace with the following call. Need to find better soluction.
+                    ft.commitAllowingStateLoss();
 
                 }
             }.start();
@@ -273,7 +316,7 @@ public class TodayFragment extends Fragment {
         LocalDate date = LocalDate.now();
         DayOfWeek day = DayOfWeek.of(date.get(ChronoField.DAY_OF_WEEK));
 
-        day = DayOfWeek.TUESDAY; // for testing only
+        //day = DayOfWeek.TUESDAY; // for testing only
         mViewInfo.dayOfWeek = day;
 
         switch (day) {
@@ -331,8 +374,6 @@ public class TodayFragment extends Fragment {
                         DateTimeFormatter.ofPattern("h:mma"));
                 LocalTime classEndTime = LocalTime.parse(block.end_time,
                         DateTimeFormatter.ofPattern("h:mma"));
-
-                Log.i("Debin", "index=" + index + " start: " + classStartTime.toString() + " end: " + classEndTime.toString());
 
                 if ( !firstBlockFound && now.compareTo(classEndTime) < 0 ) {
                     firstBlockFound = true;

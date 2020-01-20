@@ -203,6 +203,8 @@ public class BlocksInWeek {
         dayBlock.add(blockItem);
         blockItem = new BlockItem(X_BLOCK, Block_Type.REGULAR, "12:40PM", "1:20PM");
         dayBlock.add(blockItem);
+
+
         blockItem = new BlockItem(F_BLOCK, Block_Type.WITH_LAB_CONF, "1:25PM", "2:15PM");
         dayBlock.add(blockItem);
         blockItem = new BlockItem(F_BLOCK, Block_Type.LAB_CONF, "2:15PM", "2:25PM");
