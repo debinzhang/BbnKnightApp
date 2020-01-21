@@ -421,6 +421,12 @@ public class TodayFragment extends Fragment {
         mViewInfo.beforeBlkEndNotification =
                 blockNotification.isBeforeEndNotificationSet(block.name);
 
+        // no need to send notification in the middle of a block that contains lab-conf
+        if (block.type == BlocksInWeek.Block_Type.WITH_LAB_CONF)
+            mViewInfo.beforeBlkEndNotification = false;
+        if (block.type == BlocksInWeek.Block_Type.LAB_CONF)
+            mViewInfo.beforeBlkNotification = false;
+
         Log.i("Debin", "block: " + block + " b4StartNoti: " + Boolean.toString(mViewInfo.beforeBlkNotification) +
                 "...b4EndNoti: " + Boolean.toString(mViewInfo.beforeBlkEndNotification));
     }

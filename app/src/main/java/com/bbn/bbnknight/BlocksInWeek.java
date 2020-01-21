@@ -207,7 +207,7 @@ public class BlocksInWeek {
 
         blockItem = new BlockItem(F_BLOCK, Block_Type.WITH_LAB_CONF, "1:25PM", "2:15PM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(F_BLOCK, Block_Type.LAB_CONF, "2:15PM", "2:25PM");
+        blockItem = new BlockItem(F_BLOCK, Block_Type.LAB_CONF, "2:15PM", "2:35PM");
         dayBlock.add(blockItem);
         blockItem = new BlockItem(A_BLOCK, Block_Type.REGULAR, "2:40PM", "3:25PM");
         dayBlock.add(blockItem);
@@ -258,7 +258,7 @@ public class BlocksInWeek {
         dayBlock.add(blockItem);
         blockItem = new BlockItem(D_BLOCK, Block_Type.WITH_LAB_CONF, "1:25PM", "2:15PM");
         dayBlock.add(blockItem);
-        blockItem = new BlockItem(D_BLOCK, Block_Type.LAB_CONF, "2:15PM", "2:25PM");
+        blockItem = new BlockItem(D_BLOCK, Block_Type.LAB_CONF, "2:15PM", "2:35PM");
         dayBlock.add(blockItem);
         blockItem = new BlockItem(B_BLOCK, Block_Type.REGULAR, "2:40PM", "3:25PM");
         dayBlock.add(blockItem);
