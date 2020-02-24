@@ -35,7 +35,7 @@ public class FutureDayActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            //Log.i("Debin", "getCount: numOfBlock = " + mSelectDayBlocks.size());
+            //Log.i("Evan", "getCount: numOfBlock = " + mSelectDayBlocks.size());
             return mSelectDayBlocks.size();
         }
 
@@ -126,7 +126,7 @@ public class FutureDayActivity extends AppCompatActivity {
         TextView dayTv = findViewById(R.id.day);
         TextView monthYearTv = findViewById(R.id.monthYear);
 
-        Log.i("Debin", "Receiving date: " + (mMonth+1) + "/" + mDay + "/" + mYear);
+        Log.i("Evan", "Receiving date: " + (mMonth+1) + "/" + mDay + "/" + mYear);
 
         dateOfWeekTv.setText(weekday_str[mDayOfWeek-2]);
         dayTv.setText(Integer.toString(mDay));
@@ -137,7 +137,7 @@ public class FutureDayActivity extends AppCompatActivity {
             mSelectDayBlocks = BlocksInWeek.weekBlock.get(mDayOfWeek - 2);
 
             if (mSelectDayBlocks == null) {
-                Log.i("Debin", "Get Null mBlock");
+                Log.i("Evan", "Get Null mBlock");
                 return;
             };
         } else {

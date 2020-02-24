@@ -195,7 +195,7 @@ public class TodayFragment extends Fragment {
                 LocalTime classEndTime = LocalTime.parse(block.alt_end_time,
                         DateTimeFormatter.ofPattern("h:mma"));
 
-                Log.i("Debin_1", "hit recalculate lunch start time");
+                Log.i("Evan_1", "hit recalculate lunch start time");
 
                 if (now.compareTo(classStartTime) < 0) {
                     mViewInfo.beforeClassStart = false;
@@ -245,7 +245,7 @@ public class TodayFragment extends Fragment {
         }
 
         private void startTimer() {
-            Log.i("Debin", "CountDownTimer started timer!!!!!!!: time: " + Integer.toString((int)mViewInfo.remainingTimeMils));
+            Log.i("Evan", "CountDownTimer started timer!!!!!!!: time: " + Integer.toString((int)mViewInfo.remainingTimeMils));
             mCountDownTimer = new CountDownTimer(mViewInfo.remainingTimeMils, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
@@ -255,7 +255,7 @@ public class TodayFragment extends Fragment {
                         if (millisUntilFinished <= FIVE_MIN_IN_MILLS) {
                             mViewInfo.beforeBlkNotification = false;
                             if (mViewInfo.beforeSchoolStart || mViewInfo.beforeClassStart) {
-                                Log.i("Debin", "5 minutes before class notification hit!");
+                                Log.i("Evan", "5 minutes before class notification hit!");
                                 sendOnChannel1();
                             }
                         }
@@ -264,7 +264,7 @@ public class TodayFragment extends Fragment {
                     if (mViewInfo.beforeBlkEndNotification) {
                         if (millisUntilFinished <= FIVE_MIN_IN_MILLS) {
                             mViewInfo.beforeBlkEndNotification = false;
-                            Log.i("Debin", "5 minutes before class end notification hit");
+                            Log.i("Evan", "5 minutes before class end notification hit");
                             sendOnChannel2();
                         }
                     }
@@ -274,8 +274,8 @@ public class TodayFragment extends Fragment {
 
                 @Override
                 public void onFinish() {
-                    Log.i("Debin", "onFinish() called");
-                    Log.i("Debin", "Canceling countCDownTimer --------");
+                    Log.i("Evan", "onFinish() called");
+                    Log.i("Evan", "Canceling countCDownTimer --------");
                     mCountDownTimer.cancel();
                     testFlag = true;
                     mViewInfo.resetViewInfo();
@@ -350,16 +350,16 @@ public class TodayFragment extends Fragment {
         String lastBlockEndTime = mViewInfo.dayBlocks.get(blockNum - 1).end_time;
         LocalTime endTimeLt = LocalTime.parse(lastBlockEndTime,
                 DateTimeFormatter.ofPattern("h:mma"));
-        Log.i("Debin", " last block endtime= " + endTimeLt.toString());
+        Log.i("Evan", " last block endtime= " + endTimeLt.toString());
 
         LocalTime now = LocalTime.now(); // comment out for testing
         //now = LocalTime.of(7, 54, 40);
-        Log.i("Debin", "now: " + now.toString());
+        Log.i("Evan", "now: " + now.toString());
 
         int compVal = now.compareTo(endTimeLt);
 
         if (compVal > 0) {
-            Log.i("Debin", "School is over for today");
+            Log.i("Evan", "School is over for today");
             mViewInfo.message = "School is over for today";
             mViewInfo.isSchoolOn = false;
         } else {
@@ -377,7 +377,7 @@ public class TodayFragment extends Fragment {
 
                 if ( !firstBlockFound && now.compareTo(classEndTime) < 0 ) {
                     firstBlockFound = true;
-                    Log.i("Debin", "firstBlockFound: position: " + index);
+                    Log.i("Evan", "firstBlockFound: position: " + index);
 
                     // get first block notification info
                     getNotificationInfo(block);
@@ -387,16 +387,16 @@ public class TodayFragment extends Fragment {
                     if (now.compareTo(classStartTime) < 0) {
                         diffInMinutes = now.until(classStartTime, MILLIS);
                         if (index == 0) {
-                            Log.i("Debin", "It is before school start. diffInMinutes: " + diffInMinutes);
+                            Log.i("Evan", "It is before school start. diffInMinutes: " + diffInMinutes);
                             mViewInfo.beforeSchoolStart = true;
                         } else {
-                            Log.i("Debin", "It is before class start. diffInMinutes: " + diffInMinutes);
+                            Log.i("Evan", "It is before class start. diffInMinutes: " + diffInMinutes);
                             mViewInfo.beforeClassStart = true;
                         }
                         mViewInfo.remainingTimeMils = diffInMinutes;
                     } else {
                         diffInMinutes = now.until(classEndTime, MILLIS);
-                        Log.i("Debin", "It is before class end. DiffInMinutes: " + diffInMinutes);
+                        Log.i("Evan", "It is before class end. DiffInMinutes: " + diffInMinutes);
                         mViewInfo.beforeSchoolStart = false;
                         mViewInfo.beforeClassStart = false;
                         mViewInfo.remainingTimeMils = diffInMinutes;
@@ -404,10 +404,10 @@ public class TodayFragment extends Fragment {
                 }
 
                 if (firstBlockFound) {
-                    Log.i("Debin", "block: " + index + " is added");
+                    Log.i("Evan", "block: " + index + " is added");
                     mViewInfo.remainingDayBlocks.add(block);
                 } else {
-                    Log.i("Debin", "block: " + index + " is skipped");
+                    Log.i("Evan", "block: " + index + " is skipped");
                 }
                 index++;
             }
@@ -427,12 +427,12 @@ public class TodayFragment extends Fragment {
         if (block.type == BlocksInWeek.Block_Type.LAB_CONF)
             mViewInfo.beforeBlkNotification = false;
 
-        Log.i("Debin", "block: " + block + " b4StartNoti: " + Boolean.toString(mViewInfo.beforeBlkNotification) +
+        Log.i("Evan", "block: " + block + " b4StartNoti: " + Boolean.toString(mViewInfo.beforeBlkNotification) +
                 "...b4EndNoti: " + Boolean.toString(mViewInfo.beforeBlkEndNotification));
     }
 
     public void sendOnChannel1() {
-        Log.i("Debin", "channel1 is sent to!");
+        Log.i("Evan", "channel1 is sent to!");
         Notification notification = new NotificationCompat.Builder(getContext(), BbnNotificationChannel.CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_access_alarm_black_24dp)
                 .setContentTitle("Class start alarm")
@@ -445,7 +445,7 @@ public class TodayFragment extends Fragment {
     }
 
     public void sendOnChannel2() {
-        Log.i("Debin", "channel2 is sent to!");
+        Log.i("Evan", "channel2 is sent to!");
         Notification notification = new NotificationCompat.Builder(getContext(), BbnNotificationChannel.CHANNEL_2_ID)
                 .setSmallIcon(R.drawable.ic_notifications_none_black_24dp)
                 .setContentTitle("Class end notification")
@@ -467,12 +467,12 @@ public class TodayFragment extends Fragment {
         checkSchoolDay();
 
         if (!mViewInfo.isSchoolOn) {
-            Log.i("Debin", "school is not on");
+            Log.i("Evan", "school is not on");
             view = inflater.inflate(R.layout.fragment_no_class, container, false);
             TextView noClassTv = view.findViewById(R.id.noClassTv);
             noClassTv.setText(mViewInfo.message);
         } else {
-            Log.i("Debin", "school is on");
+            Log.i("Evan", "school is on");
             view = inflater.inflate(R.layout.fragment_school_day, container, false);
             mListView = view.findViewById(R.id.school_day_list_view);
 
@@ -490,10 +490,10 @@ public class TodayFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
 
-        Log.i("Debin", "onDestroy() is called");
+        Log.i("Evan", "onDestroy() is called");
         if (mTodayBlockListAdaptor != null) {
             if (mTodayBlockListAdaptor.mCountDownTimer != null) {
-                Log.i("Debin", "Timer is destroyed!");
+                Log.i("Evan", "Timer is destroyed!");
                 mTodayBlockListAdaptor.mCountDownTimer.cancel();
             }
         }

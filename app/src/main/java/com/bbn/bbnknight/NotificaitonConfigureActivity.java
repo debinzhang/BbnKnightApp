@@ -28,7 +28,7 @@ public class NotificaitonConfigureActivity extends AppCompatActivity{
 
         mBlockNotification = BlockNotification.getInstance();
         if (mBlockNotification == null) {
-            Log.i("Debin", "BlockNotification is null!!!");
+            Log.i("Evan", "BlockNotification is null!!!");
             return;
         }
 
@@ -37,7 +37,7 @@ public class NotificaitonConfigureActivity extends AppCompatActivity{
         blockName = intent.getStringExtra("Block Name");
 
         if (blockName.equals("")) {
-            Log.i("Debin", "failed to get spcial block name from intent");
+            Log.i("Evan", "failed to get spcial block name from intent");
             return;
         }
 
@@ -67,7 +67,7 @@ public class NotificaitonConfigureActivity extends AppCompatActivity{
     }
 
     private void saveNotificationChange() {
-        Log.i("Debin", "save notification to pref");
+        Log.i("Evan", "save notification to pref");
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(
                 "com.bbn.bbnknight", Context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = sharedPreferences.edit();

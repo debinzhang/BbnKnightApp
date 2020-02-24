@@ -65,7 +65,7 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
 
     private void saveBlockNotificcationInfo()
     {
-        Log.i("Debin", "save notification to pref");
+        Log.i("Evan", "save notification to pref");
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(
                 "com.bbn.bbnknight", Context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
@@ -123,7 +123,7 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
         if (classIndex == -1)
             return;
 
-        Log.i("Debin", "delete button is clicked.0");
+        Log.i("Evan", "delete button is clicked.0");
         AlertDialog.Builder alertDiaglogBuilder = new AlertDialog.Builder(this);
         alertDiaglogBuilder
                 .setTitle("Are you sure?")
@@ -186,7 +186,7 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
             addNewClass = true;
         } else {
             if (!action.equals("edit")) {
-                Log.i("Debin", "Invalid edit class action: " + action);
+                Log.i("Evan", "Invalid edit class action: " + action);
                 finish();
             }
         }
@@ -201,7 +201,7 @@ public class addOrDelClassActivity extends AppCompatActivity implements AdapterV
         } else {
             // this is the edit class case
             SetClassActivity.ClassItem classItem = SetClassActivity.mClasses.get(classIndex);
-            Log.i("Debin", "Select classId: " + classIndex);
+            Log.i("Evan", "Select classId: " + classIndex);
             mColor = classItem.color;
             className = classItem.name;
             location = classItem.location;

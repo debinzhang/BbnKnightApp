@@ -33,7 +33,7 @@ public class ConfigureSpecialBlockActivity extends AppCompatActivity implements 
         Assembly.setOnClickListener(this);
         Lunch.setOnClickListener(this);
 
-        Log.i("Debin", "special_block onCreate");
+        Log.i("Evan", "special_block onCreate");
     }
 
     public void onClick(View view) {
@@ -59,7 +59,7 @@ public class ConfigureSpecialBlockActivity extends AppCompatActivity implements 
                 break;
                 default:
                     // invalid block selected
-                    Log.i("Debin", "Invalid block selected");
+                    Log.i("Evan", "Invalid block selected");
                     return;
         }
         startActivity(intent);

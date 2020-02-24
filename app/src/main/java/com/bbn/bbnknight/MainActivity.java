@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
         String notification_json = sharedPreferences.getString(
                 NotificaitonConfigureActivity.PRE_NOTIFICATION_KEY, "");
         if (!notification_json.isEmpty()) {
-            Log.i("Debin", "get notification from preference");
+            Log.i("Evan", "get notification from preference");
             Type type = new TypeToken<BlockNotification>(){}.getType();
             notificationPref= gson.fromJson(notification_json, type);
 
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity
                 BlockNotification.setInstance(notificationPref);
             }
         } else {
-            Log.i("Debin", "failed to get notification from preference");
+            Log.i("Evan", "failed to get notification from preference");
         }
 
         // retrieve lunch setting from pref
