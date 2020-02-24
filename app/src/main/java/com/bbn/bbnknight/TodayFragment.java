@@ -195,7 +195,7 @@ public class TodayFragment extends Fragment {
                 LocalTime classEndTime = LocalTime.parse(block.alt_end_time,
                         DateTimeFormatter.ofPattern("h:mma"));
 
-                Log.i("Evan_1", "hit recalculate lunch start time");
+                Log.i("Evan", "hit recalculate lunch start time");
 
                 if (now.compareTo(classStartTime) < 0) {
                     mViewInfo.beforeClassStart = false;
